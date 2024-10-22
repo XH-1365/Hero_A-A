@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "robot_cmd.h": "c",
+        "can_comm.h": "c",
+        "dji_motor.h": "c"
+    }
+}
