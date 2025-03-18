@@ -2,7 +2,9 @@
   "name": "RM_Template",
   "type": "ARM",
   "dependenceList": [],
-  "srcDirs": [],
+  "srcDirs": [
+    "../modules/referee"
+  ],
   "virtualFolder": {
     "name": "<virtual_root>",
     "files": [],
@@ -143,13 +145,13 @@
             "path": "../application/chassis.c"
           },
           {
-            "path": "../application/gimbal.c"
-          },
-          {
             "path": "../application/robot_cmd.c"
           },
           {
             "path": "../application/shoot.c"
+          },
+          {
+            "path": "../application/gimbal.c"
           }
         ],
         "folders": []
@@ -193,9 +195,6 @@
             "path": "../modules/DJI_Motor.c"
           },
           {
-            "path": "../modules/pid.c"
-          },
-          {
             "path": "../modules/vofa.c"
           },
           {
@@ -209,6 +208,30 @@
           },
           {
             "path": "../modules/can_comm.c"
+          },
+          {
+            "path": "../modules/super_cap.c"
+          },
+          {
+            "path": "../modules/power.c"
+          },
+          {
+            "path": "../modules/filter.c"
+          },
+          {
+            "path": "../modules/pid.c"
+          },
+          {
+            "path": "../modules/referee/crc_ref.c"
+          },
+          {
+            "path": "../modules/referee/referee_task.c"
+          },
+          {
+            "path": "../modules/referee/referee_UI.c"
+          },
+          {
+            "path": "../modules/referee/rm_referee.c"
           }
         ],
         "folders": []
@@ -342,7 +365,7 @@
       "uploadConfig": {
         "bin": "",
         "target": "stm32f4x",
-        "interface": "stlink-v2",
+        "interface": "cmsis-dap",
         "baseAddr": "0x08000000"
       },
       "uploadConfigMap": {
@@ -381,7 +404,8 @@
           "../modules",
           "../bsp",
           ".cmsis/include",
-          "RTE/_RM_Template"
+          "RTE/_RM_Template",
+          "../modules/referee"
         ],
         "libList": [],
         "defineList": [

@@ -1,8 +1,8 @@
 /*
  * @Author: 励磁器狂人 9300491+exciter-maniac@user.noreply.gitee.com
  * @Date: 2024-08-06 14:10:56
- * @LastEditors: liciqikuanren 1072047735@qq.com
- * @LastEditTime: 2024-10-22 15:19:13
+ * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
+ * @LastEditTime: 2025-03-08 21:08:26
  * @FilePath: \DJI_Motor\Inc\DJI_Motor.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -49,6 +49,7 @@ typedef struct __DJI_Motor_Angle_Sum_Struct
     float Angle_Turn;
     float Angle_Now;
     float Angle_Last;
+    float Angle_Offset;
 } DJI_Motor_Angle_Sum_Struct;
 
 typedef struct __DJI_Motor_RetData_Struct

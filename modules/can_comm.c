@@ -29,8 +29,8 @@ void CAN_Comm_RX_Filter_Set(void)
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.IDE = 1; // 必须为标准帧
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.RTR = 1; // 必须为数据帧
 
-    Bsp_CAN_RX_Filter_config.FilterBank = 2;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
-    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 0; // 起始过滤器编号 can1(0-13)和can2(14-27)分别得到一半的filter
+    Bsp_CAN_RX_Filter_config.FilterBank = CAN1_FILTER_ID_CAN_COMM;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
+    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14;// 起始过滤器编号应该为14，这样的话 can1(0-13)和can2(14-27)就能分别得到一半的filter
     Bsp_CAN_RX_Filter_config.hcan = &hcan1;            // 选择CAN1或者CAN2
     Bsp_CAN_RX_Filter_config.fifox = CAN_FilterFIFO0;
     Bsp_CAN_RX_Filter_config.FilterActivation = CAN_FILTER_ENABLE;
@@ -99,7 +99,7 @@ void CAN_Comm_Timing_Handle(void)
 /// @return 返回1说明正常连接中，返回0说明连接断开
 char CAN_Comm_Get_State(CAN_Comm_Struct *Instance)
 {
-    if(Down_Board.Count>0)
+    if(Instance->Count>0)
     {
         return 1;
     }

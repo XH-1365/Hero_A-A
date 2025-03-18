@@ -46,7 +46,7 @@ static void CH104_IMU_CAN_RX_Filter_Set(void)
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.IDE = 1; // 必须为标准帧
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.RTR = 1; // 必须为数据帧
 
-    Bsp_CAN_RX_Filter_config.FilterBank = 14;           // 过滤器组编号  CAN过滤器有很多个选择其中一个即可
+    Bsp_CAN_RX_Filter_config.FilterBank = CAN2_FILTER_ID_CH104_IMU;           // 过滤器组编号  CAN过滤器有很多个选择其中一个即可
     Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14; // 起始过滤器编号 can1(0-13)和can2(14-27)分别得到一半的filter
     Bsp_CAN_RX_Filter_config.hcan = &hcan2;             // 选择CAN1或者CAN2
     Bsp_CAN_RX_Filter_config.fifox = CAN_FilterFIFO1;

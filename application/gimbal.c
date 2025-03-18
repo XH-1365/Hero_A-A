@@ -1,3 +1,11 @@
+/*
+ * @Author: liciqikuanren 1072047735@qq.com
+ * @Date: 2024-10-20 16:56:40
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2025-01-10 17:31:07
+ * @FilePath: \RM_Hero_Down_Board\application\gimbal.c
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 
 #include "gimbal.h"
 #include "DJI_Motor.h"
@@ -13,7 +21,7 @@
 #define YAW_SPEED -NORMALIZE((float)Motor_Group[DJI_MGRP2].Data[DJI_MGRP2_GM6020_RX_5].Ret.Speed, -320.0, 320.0)
 #define YAW_ANGLE -Motor_Group[DJI_MGRP2].Data[DJI_MGRP2_GM6020_RX_5].Ret.Angle_Sum_Process.Angle_Sum_Value
 // #define YAW_ANGLE Gimbal_Get_Angle(&(Gimbal.Yaw), Motor_Group[DJI_MGRP2].Data[DJI_MGRP2_GM6020_RX_5].Ret.Angle,1.0,0.0)
-// #define YAW_ANGLE Gimbal_Get_Angle(&(Gimbal.Yaw), (float)CH104_IMU_CAN.Euler_Angles.Data.Yaw / 36000, 0.5, -0.5)
+// #define YAW_ANGLE -Gimbal_Get_Angle(&(Gimbal.Yaw), (float)CH104_IMU_CAN.Euler_Angles.Data.Yaw / 36000, 0.5, -0.5)
 
 #define PITCH_CURRENT Motor_Group[DJI_MGRP2].Data[DJI_MGRP2_M2006_RX_6].Ret.Current
 #define PITCH_SPEED (float)Motor_Group[DJI_MGRP2].Data[DJI_MGRP2_M2006_RX_6].Ret.Speed / 18000
@@ -138,7 +146,7 @@ void Quadratic_formula(float a, float b, float c, float *x1, float *x2)
     (*x1) = (-b + sqrtf(Delta)) / (2 * a);
     (*x2) = (-b - sqrtf(Delta)) / (2 * a);
 }
-/// @brief 输入角度得到丝杆的位置
+/// @brief 输入目标角度得到丝杆的目标位置
 /// @param screw_position 单位：弧度
 /// @return 丝杆的位置 单位：mm
 float Screw_Pitch_Length_To_Angle_Calculate(float Pitch_Angle)
@@ -147,7 +155,7 @@ float Screw_Pitch_Length_To_Angle_Calculate(float Pitch_Angle)
     float d_square = 0;
     float a1 = 31.42f;
     float c2 = 64.1515f;
-    float D = Pitch_Angle;
+    float D = Pitch_Angle+0.6455f+0.5731f;
     //  float D=1.2186f;
     //  float D=1.0f;
 
@@ -164,20 +172,11 @@ float Screw_Pitch_Length_To_Angle_Calculate(float Pitch_Angle)
 
     d_square = a1 * a1 + c2 * c2 - 2 * a1 * c2 * cosf(D);
     d = sqrtf(d_square);
-    // Vofa_print("d=%.4f\r\n", d);
-
     A1 = asinf((a1 / d) * sinf(D));
-    // Vofa_print("A1=%.4f\r\n", A1);
-
     A2 = A - A1;
-    // Vofa_print("A2=%.4f\r\n", A2);
     a2_square = a2 * a2;
-    //  a2_square=d_square+c1*c1-2*d*c1*cosf(A2);
-    //  a2=sqrtf(a2_square);
-    //  printf("a2=%.4f\r\n",a2);
-    // Quadratic_formula(1.0f,5.0f,-6.0f,&x1,&x2);//测试
+
     Quadratic_formula(1.0f, -2 * d * cosf(A2), d_square - a2_square, &x1, &x2);
-    // Vofa_print("x1=%.4f,x2=%.4f\r\n", x1, x2);
     if (x1 <= 45 && x1 > 0)
     {
         c1 = x1;

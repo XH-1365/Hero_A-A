@@ -190,7 +190,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -302,7 +302,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x30000</Size>
+                <Size>0x40000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../application;../modules;../bsp</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../application;../modules;../bsp;..\modules\referee</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -445,16 +445,6 @@
               <FilePath>..\application\chassis.c</FilePath>
             </File>
             <File>
-              <FileName>gimbal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\gimbal.c</FilePath>
-            </File>
-            <File>
-              <FileName>shoot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\shoot.c</FilePath>
-            </File>
-            <File>
               <FileName>robot_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\application\robot_cmd.c</FilePath>
@@ -503,6 +493,21 @@
               <FileName>can_comm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\modules\can_comm.c</FilePath>
+            </File>
+            <File>
+              <FileName>super_cap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\super_cap.c</FilePath>
+            </File>
+            <File>
+              <FileName>power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\power.c</FilePath>
+            </File>
+            <File>
+              <FileName>filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\filter.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -648,6 +653,31 @@
               <FileName>startup_stm32f427xx.s</FileName>
               <FileType>2</FileType>
               <FilePath>startup_stm32f427xx.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>referee</GroupName>
+          <Files>
+            <File>
+              <FileName>crc_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\referee\crc_ref.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\referee\referee_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee_UI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\referee\referee_UI.c</FilePath>
+            </File>
+            <File>
+              <FileName>rm_referee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\referee\rm_referee.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -10,7 +10,22 @@
 #define _BSP_CAN_H__
 #include "can.h"
 #pragma pack(1) // 指定结构体按照1字节对齐
+typedef enum __BSP_CAN_Filter_ID_enum
+{
+    // CAN1接收过滤器ID:0~13
+    CAN1_FILTER_ID_GIMBAL = 0,
+    CAN1_FILTER_ID_DM_MOTOR,
+    CAN1_FILTER_ID_CAN_COMM,
 
+    CAN1_FILTER_ID_SUM,
+
+    // CAN2接收过滤器ID:14~27
+    // CAN2_FILTER_ID_SHOOT = 14,
+    CAN2_FILTER_ID_CHASSIS = 14,
+    CAN2_FILTER_ID_CH104_IMU,
+    CAN2_FILTER_ID_SUPER_CAP,
+    CAN2_FILTER_ID_SUM
+} BSP_CAN_Filter_ID_enum;
 typedef union
 {
     struct
@@ -34,7 +49,7 @@ typedef struct __Bsp_CAN_RX_Filter_Struct
 {
     Bsp_CAN_RX_Filter_FilterId_TypeDef Filter_ID;
     Bsp_CAN_RX_Filter_FilterId_TypeDef Filter_Mask_ID; // 掩码 ，掩码位为1时需要进行比较，为0时则可以时任意值，
-    uint8_t FilterBank;
+    BSP_CAN_Filter_ID_enum FilterBank;
     uint8_t SlaveStartFilterBank;
     CAN_HandleTypeDef *hcan;
     uint32_t fifox; // fifo 0~1

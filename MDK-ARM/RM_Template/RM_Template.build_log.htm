@@ -17,21 +17,39 @@ Library Manager: ArmAr.exe V5.05 update 1 (build 106)
 Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
 CPU DLL:         SARMCM3.DLL V5.39.0.0
 Dialog DLL:      DCM.DLL V1.17.5.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.2.0.0
+Target DLL:      CMSIS_AGDI.dll V1.33.16.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 F:\RM_Program\RM_Code_Program\Template\RM_Hero\RM_Hero_Down_Board\MDK-ARM\RM_Template.uvprojx
-Project File Date:  10/22/2024
+Project File Date:  03/14/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 1 (build 106)', folder: 'D:\Program Files\Keil5\ARM\ARMCC\Bin'
 Build target 'RM_Template'
 compiling app.c...
+compiling can_comm.c...
+compiling referee_task.c...
+..\modules\referee\referee_task.c(162): warning:  #177-D: function "RobotModeTest" was declared but never referenced
+  static void RobotModeTest(Referee_Interactive_info_t *_Interactive_data) // 测试用函数，实现模式自动变化
+..\modules\referee\referee_task.c(87): warning:  #177-D: variable "UI_Energy" was declared but never referenced
+  static Graph_Data_t UI_Energy[3];      // 电容能量�?                      ^
+..\modules\referee\referee_task.c(88): warning:  #177-D: variable "UI_State_sta" was declared but never referenced
+  static String_Data_t UI_State_sta[6];  // 机器人状�?静态只需画一�?                       ^
+..\modules\referee\referee_task.c(89): warning:  #177-D: variable "UI_State_dyn" was declared but never referenced
+  static String_Data_t UI_State_dyn[6];  // 机器人状�?动态先add才能change
+..\modules\referee\referee_task.c(160): warning:  #177-D: variable "count" was declared but never referenced
+  static uint8_t count = 0;
+..\modules\referee\referee_task.c(161): warning:  #177-D: variable "count1" was declared but never referenced
+  static uint16_t count1 = 0;
+..\modules\referee\referee_task.c: 6 warnings, 0 errors
+compiling bsp_tim_isr.c...
+compiling robot_cmd.c...
+compiling chassis.c...
 linking...
-Program Size: Code=28046 RO-data=1242 RW-data=176 ZI-data=4496  
+Program Size: Code=26032 RO-data=1616 RW-data=216 ZI-data=4720  
 FromELF: creating hex file...
-"RM_Template\RM_Template.axf" - 0 Error(s), 0 Warning(s).
+"RM_Template\RM_Template.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -55,7 +73,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE@5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>

@@ -45,8 +45,8 @@ void DJI_Motor_RX_Filter_Set(void)
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.IDE = 1; // 必须为标准帧
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.RTR = 1; // 必须为数据帧
 
-    Bsp_CAN_RX_Filter_config.FilterBank = 0;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
-    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 0; // 起始过滤器编号 can1(0-13)和can2(14-27)分别得到一半的filter
+    Bsp_CAN_RX_Filter_config.FilterBank = CAN1_FILTER_ID_GIMBAL;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
+    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14;// 起始过滤器编号应该为14，这样的话 can1(0-13)和can2(14-27)就能分别得到一半的filter
     Bsp_CAN_RX_Filter_config.hcan = &hcan1;            // 选择CAN1或者CAN2
     Bsp_CAN_RX_Filter_config.fifox = CAN_FilterFIFO0;
     Bsp_CAN_RX_Filter_config.FilterActivation = CAN_FILTER_ENABLE;
@@ -67,8 +67,8 @@ void DJI_Motor_RX_Filter_Set(void)
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.IDE = 1; // 必须为标准帧
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.RTR = 1; // 必须为数据帧
 
-    Bsp_CAN_RX_Filter_config.FilterBank = 14;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
-    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14; // 起始过滤器编号 can1(0-13)和can2(14-27)分别得到一半的filter
+    Bsp_CAN_RX_Filter_config.FilterBank = CAN2_FILTER_ID_CHASSIS;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
+    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14;// 起始过滤器编号应该为14，这样的话 can1(0-13)和can2(14-27)就能分别得到一半的filter
     Bsp_CAN_RX_Filter_config.hcan = &hcan2;            // 选择CAN1或者CAN2
     Bsp_CAN_RX_Filter_config.fifox = CAN_FilterFIFO1;
     Bsp_CAN_RX_Filter_config.FilterActivation = CAN_FILTER_ENABLE;
@@ -116,7 +116,7 @@ void DJI_Motor_Set_Current(DJI_Motor_Group_enum DJI_MGRPx, DJI_Motor_TX_ID_enum 
         //     HAL_UART_Transmit_DMA(&huart6, (uint8_t *)Motor_str, strlen(Motor_str)); // 串口回传1号电机返回的数据
         // }
 
-        Error_Handler();
+        // Error_Handler();
     }
 }
 void DJI_Motor_Set_Current_Value(DJI_Motor_Group_enum DJI_MGRPx, DJI_Motor_TX_ID_enum TX_ID, float Motor1, float Motor2, float Motor3, float Motor4)

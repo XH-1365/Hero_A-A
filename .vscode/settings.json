@@ -2,6 +2,23 @@
     "files.associations": {
         "robot_cmd.h": "c",
         "can_comm.h": "c",
-        "dji_motor.h": "c"
+        "dji_motor.h": "c",
+        "gimbal.h": "c",
+        "limits": "c",
+        "type_traits": "c",
+        "string.h": "c",
+        "bsp_can.h": "c",
+        "super_cap.h": "c",
+        "ch104_imu_can.h": "c",
+        "rm_typedef.h": "c",
+        "chassis.h": "c",
+        "math.h": "c",
+        "filter.h": "c",
+        "bsp_usart.h": "c",
+        "usart.h": "c",
+        "rm_referee.h": "c",
+        "referee_ui.h": "c",
+        "referee_task.h": "c",
+        "referee_protocol.h": "c"
     }
 }

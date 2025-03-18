@@ -40,3 +40,4 @@ rm_template\bsp_can_isr.o: ../modules/CH104_IMU_CAN.h
 rm_template\bsp_can_isr.o: ../modules/CH104_IMU_CAN_CMD.h
 rm_template\bsp_can_isr.o: ../modules/DM_Motor.h
 rm_template\bsp_can_isr.o: ../modules/can_comm.h
+rm_template\bsp_can_isr.o: ../modules/super_cap.h

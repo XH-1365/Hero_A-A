@@ -1,8 +1,8 @@
 /*
  * @Author: 励磁器狂人 9300491+exciter-maniac@user.noreply.gitee.com
  * @Date: 2024-08-13 13:34:24
- * @LastEditors: liciqikuanren 1072047735@qq.com
- * @LastEditTime: 2024-10-22 16:04:32
+ * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
+ * @LastEditTime: 2025-03-08 20:43:19
  * @FilePath: \MDK-ARMf:\RM_Program\RM_Code_Program\External_Module\DJI_Motor\bsp\bsp_can_isr.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,7 +11,7 @@
 #include "CH104_IMU_CAN.h"
 #include "DM_Motor.h"
 #include "can_comm.h"
-
+#include "super_cap.h"
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     uint8_t Error_Data = 0;
@@ -41,6 +41,7 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
         {
             Error_Handler();
         }
+        Super_Cap_Get_Data(&Super_Cap,  &RxHeader,Bsp_CAN2_Fifo1_RX_Data);
         DJI_Motor_Get_Data(DJI_MGRP1, &RxHeader, Bsp_CAN2_Fifo1_RX_Data);
         // CH104_IMU_CAN_Get_Data(&CH104_IMU_CAN, &RxHeader, Bsp_CAN2_Fifo1_RX_Data);
     }

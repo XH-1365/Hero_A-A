@@ -10,6 +10,7 @@
 #include "DJI_DR16.h"
 #include "vofa.h"
 #include "CH104_IMU_USART.H"
+#include "rm_referee.h"
 /* 串口空闲中断回调函数 */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
@@ -35,5 +36,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 
     // HAL_UART_Transmit_DMA(&huart6,DJI_DR16_Get_Buffer(),Size);
     //  HAL_UART_Transmit_DMA(&huart6,(uint8_t*)str, strlen(str));
+  }
+  else if (huart == &huart3) //  接收裁判系统发送的数据
+  {
+    Referee_RX_Handle(Referee_Get_Buffer(), Size);
   }
 }
