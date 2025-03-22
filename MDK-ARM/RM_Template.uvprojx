@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -508,6 +508,11 @@
               <FileName>filter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\modules\filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>Speed_Ramp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\modules\Speed_Ramp.c</FilePath>
             </File>
           </Files>
         </Group>

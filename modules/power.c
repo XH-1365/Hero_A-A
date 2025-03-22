@@ -79,7 +79,8 @@ float Calculat_Power_Sum(float Power_Value[], uint8_t Power_Value_Num)
     {
         Power_Sum += Power_Value[i] * Index(Power_Value[i]);
     }
-    return Power_Sum;
+    //以下为测试比完赛后记得按需改正
+    return Power_Sum*0.8f;
 }
 
 ///也许可以试试这个把衰减系数同时乘上电流和速度

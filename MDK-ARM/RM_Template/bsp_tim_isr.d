@@ -39,6 +39,7 @@ rm_template\bsp_tim_isr.o: ../bsp/RM_typedef.h
 rm_template\bsp_tim_isr.o: ../application/chassis.h
 rm_template\bsp_tim_isr.o: ../modules/pid.h
 rm_template\bsp_tim_isr.o: ../modules/filter.h
+rm_template\bsp_tim_isr.o: ../modules/Speed_Ramp.h
 rm_template\bsp_tim_isr.o: ../modules/vofa.h
 rm_template\bsp_tim_isr.o: ../modules/DJI_DR16.h
 rm_template\bsp_tim_isr.o: ../application/robot_cmd.h

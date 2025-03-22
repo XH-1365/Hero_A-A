@@ -11,7 +11,7 @@
 #include "RM_typedef.h"
 #include "pid.h"
 #include "filter.h"
-
+#include "Speed_Ramp.h"
 // 机器人底盘修改的参数,单位为mm(毫米)
 
 // 纵向轴距(前进后退方向)（前后两个轮中心的距离）
@@ -57,10 +57,18 @@
 
 typedef enum __Chassis_Mode_enum
 {
-  CHASSIS_FOLLOW = 2, // 跟随模式
-  CHASSIS_PEG_TOP = 3 // 小陀螺模式
+  CHASSIS_FOLLOW = 2,      // 跟随模式
+  CHASSIS_PEG_TOP = 3,    // 小陀螺模式
 
 } Chassis_Mode_enum;
+
+typedef enum __Chassis_Power_Mode_enum
+{
+  POWER_NORMAL = 0,      // 正常功率模式
+  POWER_SUPER = 1,    // 超级功率模式在当前等级上加20w
+
+} Chassis_Power_Mode_enum;
+
 
 typedef struct __Chassis_Struct
 {
@@ -88,8 +96,13 @@ typedef struct __Chassis_Struct
   float Angle_Last;
 
   float X_Speed_Tar;
+  SpeedRampController X_Speed_Ramp;
+
   float Y_Speed_Tar;
+  SpeedRampController Y_Speed_Ramp;
+
   float OMEGA_Speed_Tar;
+  SpeedRampController OMEGA_Speed_Ramp;
 
   float X_Speed;
   float Y_Speed;
@@ -105,7 +118,10 @@ typedef struct __Chassis_Struct
 
   Low_Pass_Filter_Struct Power_Zeta_Filter;
 
+  Chassis_Power_Mode_enum Power_Mode; // 底盘功率模式模式 POWER_NORMAL正常模式 POWER_SUPER超级模式，功率在上限处增加20w
+
   float Power_Mx_Limit;            // 功率上限
+  float Power_Mx_Add;              // 功率上限增量超级模式使用在功率上限的基础上增加
   float Power_Buffer;              // 当前功率缓冲能量值 单位： J
   float Power_Buffer_Tar;          // 当前功率缓冲能量目标值 单位： J  一般设为50J
   pid_controler Power_Control_Pid; // 功率控制PID

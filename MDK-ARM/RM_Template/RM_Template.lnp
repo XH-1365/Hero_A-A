@@ -21,6 +21,7 @@
 "rm_template\super_cap.o"
 "rm_template\power.o"
 "rm_template\filter.o"
+"rm_template\speed_ramp.o"
 "rm_template\bsp_can.o"
 "rm_template\bsp_can_isr.o"
 "rm_template\bsp_tim.o"

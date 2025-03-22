@@ -348,9 +348,9 @@ typedef enum
 /* 图形配置参数__图形操作 */
 typedef enum
 {
-	UI_Graph_ADD = 1,
-	UI_Graph_Change = 2,
-	UI_Graph_Del = 3,
+	UI_Graph_ADD = 1,//增加
+	UI_Graph_Change = 2,//改变
+	UI_Graph_Del = 3,   //删除
 } UI_Graph_Operate_e;
 
 /* 图形配置参数__图形类型 */

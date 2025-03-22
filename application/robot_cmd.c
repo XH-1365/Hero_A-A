@@ -71,6 +71,8 @@ void Remote_Control_Set()
     default:
         break;
     }
+
+    Chassis_Set_Power_Mode(Chassis_Control_Data.Super_Mode);
 }
 
 void Mouse_Key_Set()

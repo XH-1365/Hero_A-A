@@ -19,6 +19,10 @@
         "rm_referee.h": "c",
         "referee_ui.h": "c",
         "referee_task.h": "c",
-        "referee_protocol.h": "c"
+        "referee_protocol.h": "c",
+        "speed_ramp.h": "c",
+        "pid.h": "c",
+        "dji_dr16.h": "c",
+        "shoot.h": "c"
     }
 }

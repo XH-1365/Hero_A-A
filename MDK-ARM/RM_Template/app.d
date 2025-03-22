@@ -37,6 +37,7 @@ rm_template\app.o: ../bsp/RM_typedef.h
 rm_template\app.o: ..\application\chassis.h
 rm_template\app.o: ../modules/pid.h
 rm_template\app.o: ../modules/filter.h
+rm_template\app.o: ../modules/Speed_Ramp.h
 rm_template\app.o: ../modules/DJI_Motor.h
 rm_template\app.o: ../modules/DJI_DR16.h
 rm_template\app.o: ../modules/DM_Motor.h

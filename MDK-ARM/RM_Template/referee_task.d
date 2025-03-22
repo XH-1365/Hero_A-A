@@ -41,3 +41,5 @@ rm_template\referee_task.o: ../bsp/bsp_usart.h
 rm_template\referee_task.o: ..\modules\referee\referee_UI.h
 rm_template\referee_task.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
 rm_template\referee_task.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\string.h
+rm_template\referee_task.o: ../modules/super_cap.h
+rm_template\referee_task.o: ../application/robot_cmd.h

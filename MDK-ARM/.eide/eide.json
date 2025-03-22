@@ -232,6 +232,9 @@
           },
           {
             "path": "../modules/referee/rm_referee.c"
+          },
+          {
+            "path": "../modules/Speed_Ramp.c"
           }
         ],
         "folders": []

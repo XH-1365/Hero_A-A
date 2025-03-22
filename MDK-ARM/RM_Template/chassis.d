@@ -35,6 +35,7 @@ rm_template\chassis.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.
 rm_template\chassis.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 rm_template\chassis.o: ../modules/pid.h
 rm_template\chassis.o: ../modules/filter.h
+rm_template\chassis.o: ../modules/Speed_Ramp.h
 rm_template\chassis.o: ../modules/DJI_Motor.h
 rm_template\chassis.o: ../Core/Inc/usart.h
 rm_template\chassis.o: ../Core/Inc/main.h

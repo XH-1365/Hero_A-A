@@ -318,16 +318,16 @@ void Shoot_Control_Handle(void)
         Vofa_Transmit();
 #endif
 
-        Vofa_Set_TX_Value(VOFA_TX_CURRENT, DM_Motor_4310.Ret_Value.Tprque);
-        Vofa_Set_TX_Value(VOFA_TX_CURRENT_TAR, Shoot.Feeding_Motor.Tprque_Limit);
-        Vofa_Set_TX_Value(VOFA_TX_SPEED, DM_Motor_4310.Ret_Value.Speed);
-        Vofa_Set_TX_Value(VOFA_TX_SPEED_TAR, Shoot.Feeding_Motor.Speed_Limit);
-        Vofa_Set_TX_Value(VOFA_TX_ANGLE, FEEDING_MOTOR_ANGLE);
-        Vofa_Set_TX_Value(VOFA_TX_ANGLE_TAR, Shoot.Feeding_Motor.Angle_Tar);
+        // Vofa_Set_TX_Value(VOFA_TX_CURRENT, DM_Motor_4310.Ret_Value.Tprque);
+        // Vofa_Set_TX_Value(VOFA_TX_CURRENT_TAR, Shoot.Feeding_Motor.Tprque_Limit);
+        // Vofa_Set_TX_Value(VOFA_TX_SPEED, DM_Motor_4310.Ret_Value.Speed);
+        // Vofa_Set_TX_Value(VOFA_TX_SPEED_TAR, Shoot.Feeding_Motor.Speed_Limit);
+        // Vofa_Set_TX_Value(VOFA_TX_ANGLE, FEEDING_MOTOR_ANGLE);
+        // Vofa_Set_TX_Value(VOFA_TX_ANGLE_TAR, Shoot.Feeding_Motor.Angle_Tar);
 
-        // Vofa_Set_TX_Value(VOFA_TX_CURRENT, Shoot.Feeding_Motor.Angle_Tar * PI);
-        // Vofa_Set_TX_Value(VOFA_TX_CURRENT_TAR, SHOOT_PILL_LIMIT);
-        Vofa_Transmit();
+        // // Vofa_Set_TX_Value(VOFA_TX_CURRENT, Shoot.Feeding_Motor.Angle_Tar * PI);
+        // // Vofa_Set_TX_Value(VOFA_TX_CURRENT_TAR, SHOOT_PILL_LIMIT);
+        // Vofa_Transmit();
         Shoot.Control_Count = 6;
         break;
     }

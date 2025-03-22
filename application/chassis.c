@@ -9,6 +9,7 @@
 #include <math.h>
 #include "rm_referee.h"
 #include "super_cap.h"
+
 /*箭头方向则是电机速度为正的旋转方向
 
 M2↓        M1↑
@@ -45,6 +46,7 @@ M3↓        M4↑
 
 #define CHASSIS_VOFA_DEBUG 0
 
+
 Chassis_Struct Chassis = {0};
 char Chassis_Str[100];
 float OMEGA_VALUE = 0;
@@ -76,19 +78,24 @@ void Chassis_Init(void)
 
     Chassis.Gimbal_Yaw_Angle_Tar = 0;
     PID_Init(&Chassis.Gimbal_Yaw_Pid_Angle);
-    PID_Set(&Chassis.Gimbal_Yaw_Pid_Angle, 350.5, 0, 0, 0.03, 0.015, MOTOR_SPEED_RPM_MAX * RPM_TO_RADIAN * 0.5f);
-
+    PID_Set(&Chassis.Gimbal_Yaw_Pid_Angle, 360, 0, 0, 0.03, 0.05, MOTOR_SPEED_RPM_MAX * RPM_TO_RADIAN * 0.5f);
     // 以下是底盘功率控制相关
 
     Low_Pass_Filter_Init(&Chassis.Power_Zeta_Filter, 0.1f, 0.0f);
 
     PID_Init(&Chassis.Power_Control_Pid);
     PID_Set(&Chassis.Power_Control_Pid, -1.0f, 0, 0, 0.03, 0.01, POWER_MX_LIMIT);
+
+    Speed_Ramp_Init(&Chassis.X_Speed_Ramp, 2.0f, 30.0f, 1.0f);
+    Speed_Ramp_Init(&Chassis.Y_Speed_Ramp, 2.0f, 30.0f, 1.0f);
+    Speed_Ramp_Init(&Chassis.OMEGA_Speed_Ramp, PIX2 * 50.0f, PIX2 * 100.0f, PIX2 * 100.0f);
+
     Chassis.Power_Buffer_Tar = 50.0f;
     Chassis.Power_Mx_Limit = 30.0f;
     Chassis.Referee_Power_Mx_Limit = 50.0f;
+    Chassis.Power_Mx_Add=20.0F;//超级模式的功率为20w
     Chassis.Power_Zeta = 1.0f;
-}
+}//
 // 麦克纳姆轮正解算
 
 void Chassis_Forward_Kinematics(void)
@@ -106,10 +113,31 @@ void Chassis_Forward_Kinematics(void)
     Chassis.OMEGA_Speed = omega * 100000.0f;
 }
 
+// 当小车直行的时候让底盘归位
+void Chassis_Gimbal_Yaw_Err_Dz_Control(void)
+{
+    if ((fabs(Chassis.Y_Speed_Tar) > 0.01f)||(fabs(Chassis.X_Speed_Tar)> 0.01f))
+    {
+        Chassis.Gimbal_Yaw_Pid_Angle.err_dz = 0.001f;
+    }
+    else
+    {
+        Chassis.Gimbal_Yaw_Pid_Angle.err_dz = 0.05f;
+    }
+
+
+
+}
+
 void Chassis_Set_Mode(Chassis_Mode_enum Mode)
 {
     Chassis.Mode = Mode;
 }
+void Chassis_Set_Power_Mode(Chassis_Power_Mode_enum Mode)
+{
+    Chassis.Power_Mode = Mode;
+}
+
 
 void Chassis_Control(float X_Speed, float Y_Speed)
 {
@@ -217,7 +245,10 @@ void Chassis_Power_Control(void)
     // Chassis.Power_Control_Pid.err = Chassis.Power_Mx_Limit - Chassis.Power_Sum_Now;
     // Chassis.Power_Control_Pid.output = pid_error_input(&Chassis.Power_Control_Pid, Chassis.Power_Control_Pid.err);
 
-    Chassis.Power_Mx_Limit_Sum = Chassis.Referee_Power_Mx_Limit + Chassis.Power_Control_Pid.output;
+    Chassis.Power_Mx_Limit_Sum = Chassis.Referee_Power_Mx_Limit +
+     Chassis.Power_Control_Pid.output+
+     ((Chassis.Power_Mode==POWER_SUPER) ?Chassis.Power_Mx_Add:0.0f);
+
     Power_Zeta = Power_Calculat_Damping_Coefficient(Chassis.Power_Mx_Limit_Sum, Chassis.Power_Sum_Now);
     // Chassis.Power_Zeta = Power_Zeta;
     Chassis.Power_Zeta = Low_Pass_Filter(&Chassis.Power_Zeta_Filter, Power_Zeta); // 对输出值进行低通滤波
@@ -321,6 +352,9 @@ void Chassis_Task(void)
 #else
         // 当 CHASSIS_VOFA_DEBUG 为 0 时，这里可以放置替代代码或留空
 #endif
+        // 当小车直行的时候让底盘归位的函数
+        Chassis_Gimbal_Yaw_Err_Dz_Control();
+
         Chassis.Gimbal_Yaw_Angle_Tar = calculateYawAngle(GIMBAL_YAW_ANGLE); // 判断底盘的朝向
         Chassis.Gimbal_Yaw_Pid_Angle.err = Chassis.Gimbal_Yaw_Angle_Tar - GIMBAL_YAW_ANGLE;
         Chassis.Gimbal_Yaw_Pid_Angle.output = pid_error_input(&Chassis.Gimbal_Yaw_Pid_Angle, Chassis.Gimbal_Yaw_Pid_Angle.err);
@@ -346,7 +380,7 @@ void Chassis_Task(void)
             }
             else
             {
-                OMEGA_VALUE = PIX2 * 13.0f;
+                OMEGA_VALUE = PIX2 * 20.0f;
             }
 
             break;
@@ -371,12 +405,19 @@ void Chassis_Task(void)
         default:
             break;
         }
-
+        Chassis.X_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.X_Speed_Ramp, X_VALUE, 0.006f);
+        Chassis.Y_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.Y_Speed_Ramp, Y_VALUE, 0.006f);
+        Chassis.OMEGA_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.OMEGA_Speed_Ramp, OMEGA_VALUE, 0.006f);
         // 麦克纳姆轮逆解算 求出四个轮子的目标转速
-        Chassis.M1_Speed = X_VALUE * SIN_ALPHA() + Y_VALUE * COS_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M1_L1) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
-        Chassis.M2_Speed = X_VALUE * COS_ALPHA() - Y_VALUE * SIN_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M2_L2) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
-        Chassis.M3_Speed = -X_VALUE * SIN_ALPHA() - Y_VALUE * COS_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M3_L3) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
-        Chassis.M4_Speed = -X_VALUE * COS_ALPHA() + Y_VALUE * SIN_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M4_L4) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        Chassis.M1_Speed = (Chassis.X_Speed_Ramp.current_speed) * SIN_ALPHA() + (Chassis.Y_Speed_Ramp.current_speed) * COS_ALPHA() + (((Chassis.OMEGA_Speed_Ramp.current_speed) * RADIUS_WHEEL) / M1_L1) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        Chassis.M2_Speed = (Chassis.X_Speed_Ramp.current_speed) * COS_ALPHA() - (Chassis.Y_Speed_Ramp.current_speed) * SIN_ALPHA() + (((Chassis.OMEGA_Speed_Ramp.current_speed) * RADIUS_WHEEL) / M2_L2) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        Chassis.M3_Speed = -(Chassis.X_Speed_Ramp.current_speed) * SIN_ALPHA() - (Chassis.Y_Speed_Ramp.current_speed) * COS_ALPHA() + (((Chassis.OMEGA_Speed_Ramp.current_speed) * RADIUS_WHEEL) / M3_L3) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        Chassis.M4_Speed = -(Chassis.X_Speed_Ramp.current_speed) * COS_ALPHA() + (Chassis.Y_Speed_Ramp.current_speed) * SIN_ALPHA() + (((Chassis.OMEGA_Speed_Ramp.current_speed) * RADIUS_WHEEL) / M4_L4) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+
+        // Chassis.M1_Speed = X_VALUE * SIN_ALPHA() + Y_VALUE * COS_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M1_L1) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        // Chassis.M2_Speed = X_VALUE * COS_ALPHA() - Y_VALUE * SIN_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M2_L2) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        // Chassis.M3_Speed = -X_VALUE * SIN_ALPHA() - Y_VALUE * COS_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M3_L3) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
+        // Chassis.M4_Speed = -X_VALUE * COS_ALPHA() + Y_VALUE * SIN_ALPHA() + ((OMEGA_VALUE * RADIUS_WHEEL) / M4_L4) * MOTOR_GEAR_RATIO * RADIAN_TO_RPM / 9000.0f;
 
         // 底盘等级功能设置
         Chassis_Level_Control();

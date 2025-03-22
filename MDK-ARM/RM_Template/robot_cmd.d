@@ -37,6 +37,7 @@ rm_template\robot_cmd.o: ../modules/DJI_DR16.h
 rm_template\robot_cmd.o: ..\application\chassis.h
 rm_template\robot_cmd.o: ../modules/pid.h
 rm_template\robot_cmd.o: ../modules/filter.h
+rm_template\robot_cmd.o: ../modules/Speed_Ramp.h
 rm_template\robot_cmd.o: ..\application\gimbal.h
 rm_template\robot_cmd.o: ..\application\shoot.h
 rm_template\robot_cmd.o: ../modules/can_comm.h
