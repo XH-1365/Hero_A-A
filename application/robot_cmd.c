@@ -2,7 +2,7 @@
  * @Author: liciqikuanren 1072047735@qq.com
  * @Date: 2024-09-04 14:32:58
  * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-17 11:15:09
+ * @LastEditTime: 2025-05-19 22:29:05
  * @FilePath: \RM_Template\application\robot_cmd.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,8 +44,15 @@ void Remote_Control_Set()
 
     // CAN_Comm_TX_Send_Data(&Down_Board, (uint8_t *)Down_Board_TX_Data, 8);
     Gimbal_Tx_Data.Chassis_OMEGA_Speed = Chassis.OMEGA_Speed;
+
+#if HAVE_REFEREE
     Gimbal_Tx_Data.Shoot_Heat = referee_info.PowerHeatData.shooter_heat_42mm;
     Gimbal_Tx_Data.Robot_Level = referee_info.GameRobotState.robot_level;
+#else
+    Gimbal_Tx_Data.Shoot_Heat = 500;
+    Gimbal_Tx_Data.Robot_Level = 10;
+#endif
+
     CAN_Comm_TX_Send_Data(&Down_Board, (uint8_t *)&Gimbal_Tx_Data, 7); // 给云台发送底盘角速度用于云台补偿
 
     Chassis_Control_Data = *(Chassis_Control_Struct *)CAN_Comm_Get_RX_Data(&Down_Board);

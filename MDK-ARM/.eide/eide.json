@@ -152,6 +152,9 @@
           },
           {
             "path": "../application/gimbal.c"
+          },
+          {
+            "path": "../application/robot_config.h"
           }
         ],
         "folders": []

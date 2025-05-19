@@ -46,6 +46,13 @@ M3↓        M4↑
 
 #define CHASSIS_VOFA_DEBUG 0
 
+// #define CHASSIA_LEVEL  referee_info.GameRobotState.robot_level
+
+#if HAVE_REFEREE
+#define CHASSIA_LEVEL referee_info.GameRobotState.robot_level
+#else
+#define CHASSIA_LEVEL 10
+#endif
 
 Chassis_Struct Chassis = {0};
 char Chassis_Str[100];
@@ -93,9 +100,9 @@ void Chassis_Init(void)
     Chassis.Power_Buffer_Tar = 50.0f;
     Chassis.Power_Mx_Limit = 30.0f;
     Chassis.Referee_Power_Mx_Limit = 50.0f;
-    Chassis.Power_Mx_Add=20.0F;//超级模式的功率为20w
+    Chassis.Power_Mx_Add = 20.0F; // 超级模式的功率为20w
     Chassis.Power_Zeta = 1.0f;
-}//
+} //
 // 麦克纳姆轮正解算
 
 void Chassis_Forward_Kinematics(void)
@@ -116,7 +123,7 @@ void Chassis_Forward_Kinematics(void)
 // 当小车直行的时候让底盘归位
 void Chassis_Gimbal_Yaw_Err_Dz_Control(void)
 {
-    if ((fabs(Chassis.Y_Speed_Tar) > 0.01f)||(fabs(Chassis.X_Speed_Tar)> 0.01f))
+    if ((fabs(Chassis.Y_Speed_Tar) > 0.01f) || (fabs(Chassis.X_Speed_Tar) > 0.01f))
     {
         Chassis.Gimbal_Yaw_Pid_Angle.err_dz = 0.001f;
     }
@@ -124,9 +131,6 @@ void Chassis_Gimbal_Yaw_Err_Dz_Control(void)
     {
         Chassis.Gimbal_Yaw_Pid_Angle.err_dz = 0.05f;
     }
-
-
-
 }
 
 void Chassis_Set_Mode(Chassis_Mode_enum Mode)
@@ -137,7 +141,6 @@ void Chassis_Set_Power_Mode(Chassis_Power_Mode_enum Mode)
 {
     Chassis.Power_Mode = Mode;
 }
-
 
 void Chassis_Control(float X_Speed, float Y_Speed)
 {
@@ -203,8 +206,8 @@ void Chassis_Level_Control(void)
     {
         Count--;
     }
-
-    Chassis.Level = referee_info.GameRobotState.robot_level;
+    Chassis.Level = CHASSIA_LEVEL;
+    // Chassis.Level = referee_info.GameRobotState.robot_level;
     //   测试用————————————————————————————————————
     // Chassis.Level =10;
     switch (Flag)
@@ -246,8 +249,8 @@ void Chassis_Power_Control(void)
     // Chassis.Power_Control_Pid.output = pid_error_input(&Chassis.Power_Control_Pid, Chassis.Power_Control_Pid.err);
 
     Chassis.Power_Mx_Limit_Sum = Chassis.Referee_Power_Mx_Limit +
-     Chassis.Power_Control_Pid.output+
-     ((Chassis.Power_Mode==POWER_SUPER) ?Chassis.Power_Mx_Add:0.0f);
+                                 Chassis.Power_Control_Pid.output +
+                                 ((Chassis.Power_Mode == POWER_SUPER) ? Chassis.Power_Mx_Add : 0.0f);
 
     Power_Zeta = Power_Calculat_Damping_Coefficient(Chassis.Power_Mx_Limit_Sum, Chassis.Power_Sum_Now);
     // Chassis.Power_Zeta = Power_Zeta;

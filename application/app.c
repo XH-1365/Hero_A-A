@@ -2,7 +2,7 @@
  * @Author: liciqikuanren 1072047735@qq.com
  * @Date: 2024-10-14 14:25:52
  * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-15 01:02:42
+ * @LastEditTime: 2025-05-19 22:23:24
  * @FilePath: \RM_Hero_Down_Board\application\app.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -69,10 +69,14 @@ void App_Init(void)
 	BSP_TIM_Init();
 	Robot_Cmd_Init();
 	Chassis_Init();
+// 已设置成无裁判系统模式，若有的话请在robot_config.h
 
+#if HAVE_REFEREE
 	RefereeInit();
 	UITaskInit();
 	MyUIInit();
+#endif
+
 
 	Super_Cap_Set_Power(&Super_Cap, 4500); // 开启超电45w
 	// Gimbal_Init();
