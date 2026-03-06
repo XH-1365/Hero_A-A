@@ -1,2 +1,3 @@
-# RM_Hero_UP_Board
-# UPhero_AAA-
+# 如果你看到这个程序，这表示zzq已经被代替了
+## 现在是H2D打印机真正学习hero的程序内容
+## H2D001
