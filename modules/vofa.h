@@ -33,7 +33,6 @@ typedef enum Vofa_RX_CH_enum
     VOFA_RX_ANGLE_KP,
     VOFA_RX_ANGLE_KI,
     VOFA_RX_ANGLE_KD,
-    VOFA_RX_ANGLE_KF,
     VOFA_RX_ANGLE_SW,
     VOFA_RX_ANGLE_TAR,
 

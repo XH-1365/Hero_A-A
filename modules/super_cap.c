@@ -1,8 +1,8 @@
 /*
  * @Author: liciqikuanren 1072047735@qq.com
  * @Date: 2024-11-05 21:22:03
- * @LastEditors: liciqikuanren 1072047735@qq.com
- * @LastEditTime: 2024-11-06 21:39:20
+ * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
+ * @LastEditTime: 2025-03-14 19:26:35
  * @FilePath: \RM_Template\modules\super_cap.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -54,27 +54,30 @@ char Super_Cap_Get_Data(Super_Cap_Struct *Super_Cap_x, CAN_RxHeaderTypeDef *RxHe
 
 void Super_Cap_init(void)
 {
-    Super_Cap.hcan = &hcan1;
+    Super_Cap.hcan = &hcan2;
     Super_Cap.RX_STD_ID = SUPER_CAP_RX_STD_ID;
     Super_Cap.TX_STD_ID = SUPER_CAP_TX_STD_ID;
     Super_Cap_RX_Filter_Set();
+
 }
 
-void Super_Cap_Set_Power(Super_Cap_Struct *Super_Cap_x, int16_t Target_Power)
+//设置超电功率单位 0.01w
+
+void Super_Cap_Set_Power(Super_Cap_Struct *Super_Cap_x, uint16_t Target_Power)
 {
     CAN_TxHeaderTypeDef TxHeader;
-    uint32_t TxMailbox;
+    uint32_t TxMailbox=CAN_TX_MAILBOX0;
     uint8_t CAN_TX_Data[2];
     uint8_t Error_Data = 0;
 
     TxHeader.StdId = Super_Cap_x->TX_STD_ID;
     TxHeader.IDE = CAN_ID_STD;
     TxHeader.RTR = CAN_RTR_DATA;
-    TxHeader.DLC = 0x08;
+    TxHeader.DLC = 0x02;
     CAN_TX_Data[0] = (uint8_t)(Target_Power >> 8);
     CAN_TX_Data[1] = (uint8_t)(Target_Power);
 
-    Error_Data = BSP_CAN_TRANSMIT(Super_Cap_x->hcan, &TxHeader, CAN_TX_Data, &TxMailbox);
+    Error_Data = BSP_CAN_TRANSMIT(Super_Cap_x->hcan, &TxHeader, CAN_TX_Data, (uint32_t *)TxMailbox);
     if (Error_Data != HAL_OK)
     {
         Error_Handler();

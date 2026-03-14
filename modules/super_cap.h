@@ -2,7 +2,7 @@
  * @Author: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
  * @Date: 2025-03-08 19:59:12
  * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-10 23:05:16
+ * @LastEditTime: 2025-03-08 20:04:24
  * @FilePath: \RM_Hero_Down_Board\modules\super_cap.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -45,6 +45,6 @@ char Super_Cap_Get_Data(Super_Cap_Struct *Super_Cap_x, CAN_RxHeaderTypeDef *RxHe
 
 void Super_Cap_init(void);
 
-void Super_Cap_Set_Power(Super_Cap_Struct *Super_Cap_x, int16_t Target_Power);
+void Super_Cap_Set_Power(Super_Cap_Struct *Super_Cap_x, uint16_t Target_Power);
 
 #endif

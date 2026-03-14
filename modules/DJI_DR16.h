@@ -1,8 +1,8 @@
 /*
  * @Author: 励磁器狂人 9300491+exciter-maniac@user.noreply.gitee.com
  * @Date: 2024-08-04 20:19:53
- * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-09 22:50:06
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2024-09-26 15:47:52
  * @FilePath: \MDK-ARMf:\RM_Program\RM_Code_Program\External_Module\DJI_DR16\Inc\DJI_DR16.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -54,18 +54,11 @@ typedef struct __DJI_DR16_Struct
             uint8_t S : 1;
             uint8_t A : 1;
             uint8_t D : 1;
-            uint8_t Shift : 1;
-            uint8_t Ctrl : 1;
             uint8_t Q : 1;
             uint8_t E : 1;
-            uint8_t R : 1;
-            uint8_t F : 1;
-            uint8_t G : 1;
-            uint8_t Z : 1;
-            uint8_t X : 1;
-            uint8_t V : 1;
-            uint8_t B : 1;
-            // uint8_t None;
+            uint8_t Shift : 1;
+            uint8_t Ctrl : 1;
+            uint8_t None;
         } Key;
 
         uint16_t Data;

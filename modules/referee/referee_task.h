@@ -12,6 +12,16 @@
 #include "rm_referee.h"
 // #include "robot_def.h"
 #include "RM_typedef.h"
+
+typedef struct __UI_Task_Struct
+{
+  uint8_t Flag;
+  uint16_t Count;
+
+
+}UI_Task_Struct;
+
+
 /**
  * @brief 初始化裁判系统交互任务(UI和多机通信)
  *
@@ -22,15 +32,18 @@ void UITaskInit(void);
  * @brief 在referee task之前调用,添加在freertos.c中
  * 
  */
+
 void MyUIInit(void);
+
+
+//UI_Task周期计时函数 应放1ms中断里
+void UI_Task_Timing(void);
 
 /**
  * @brief 裁判系统交互任务(UI和多机通信)
  *
  */
 
-void UITask(void);
-
-//void MyUIInit(void);
+void UI_Task(void);
 
 #endif // REFEREE_H

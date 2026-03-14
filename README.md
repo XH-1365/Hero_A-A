@@ -1,3 +1,1 @@
-# 这是关于RM_Hero_UP_的程序
-## 上板程序内容
-
+# RM_Hero_UP_Board

@@ -1,8 +1,8 @@
 /*
  * @Author: 励磁器狂人 9300491+exciter-maniac@user.noreply.gitee.com
  * @Date: 2024-08-12 11:52:01
- * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-08 20:01:03
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2024-09-06 20:15:22
  * @FilePath: \CAN_BSP\bsp\bsp_can.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -13,19 +13,19 @@
 typedef enum __BSP_CAN_Filter_ID_enum
 {
     // CAN1接收过滤器ID:0~13
-    CAN1_FILTER_ID_CHASSIS_GIMBAL = 0,
+    CAN1_FILTER_ID_GIMBAL = 0,
     CAN1_FILTER_ID_DM_MOTOR,
     CAN1_FILTER_ID_CAN_COMM,
-    
+
     CAN1_FILTER_ID_SUM,
 
     // CAN2接收过滤器ID:14~27
-    CAN2_FILTER_ID_SHOOT = 14,
+    // CAN2_FILTER_ID_SHOOT = 14,
+    CAN2_FILTER_ID_CHASSIS = 14,
     CAN2_FILTER_ID_CH104_IMU,
     CAN2_FILTER_ID_SUPER_CAP,
     CAN2_FILTER_ID_SUM
 } BSP_CAN_Filter_ID_enum;
-
 typedef union
 {
     struct
@@ -62,7 +62,7 @@ void Bsp_CAN_RX_Filter_Set(Bsp_CAN_RX_Filter_Struct *RX_Filter_Para);
 extern uint8_t Bsp_CAN1_Fifo0_RX_Data[8]; // CAN1_fifo0的接收缓存
 extern uint8_t Bsp_CAN1_Fifo1_RX_Data[8]; // CAN1_fifo1的接收缓存
 extern uint8_t Bsp_CAN2_Fifo1_RX_Data[8]; // CAN2_fifo1的接收缓存
-#define BSP_CAN_TRANSMIT(hcanx, TxHeaderx, TxDatax, TxMailboxx) Bsp_CAN_Transmit(hcanx, TxHeaderx, TxDatax, TxMailboxx)
+#define BSP_CAN_TRANSMIT(hcanx, TxHeaderx, TxDatax, TxMailboxx) HAL_CAN_AddTxMessage(hcanx, TxHeaderx, TxDatax, TxMailboxx)
 #define BSP_CAN_STOP(hcanx) HAL_CAN_Stop(hcanx)
 #define BSP_CAN_START(hcanx) HAL_CAN_Start(hcanx)
 void Bsp_CAN_Init(void);

@@ -1,40 +1,26 @@
 /*
  * @Author: liciqikuanren 1072047735@qq.com
  * @Date: 2024-08-14 15:54:24
- * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-02 12:01:39
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2024-10-14 14:35:45
  * @FilePath: \RM_Template\bsp\bsp_usart_isr.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #include "bsp_usart.h"
 #include "DJI_DR16.h"
-#include "DJI_VT13.h"
 #include "vofa.h"
 #include "CH104_IMU_USART.H"
 #include "rm_referee.h"
-#include "mini_pc.h"
-
-
-
 /* 串口空闲中断回调函数 */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
   if (huart == &huart8) //  将上位机发来的数据完整的返回回去
   {
-      #if huart8_control
-       Vofa_Receive_Enabled(Size);
-      #else
-      MINI_PC_RX_Handle(MINI_PC_Get_Buffer(),Size);
-      #endif
+    Vofa_Receive_Enabled(Size);
   }
   else if (huart == &huart6) //  将上位机发来的数据完整的返回 回去
   {
     CH104_IMU_USART_RX_Handle(CH104_IMU_USART_Get_Buffer(), Size);
-      
-      #if !huart8_control
-       MINI_PC_send();
-       Mini_pc_Data.Count=0;
-      #endif
   }
   else if (huart == &huart1) //  将上位机发来的数据完整的返回 回去
   {
@@ -54,9 +40,5 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
   else if (huart == &huart3) //  接收裁判系统发送的数据
   {
     Referee_RX_Handle(Referee_Get_Buffer(), Size);
-  }
-  else if(huart == &huart7)
-  {
-      VT13_RX_Handle(DJI_VT13_Get_Buffer(), Size);
   }
 }

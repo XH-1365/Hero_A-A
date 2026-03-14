@@ -16,12 +16,10 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#include "rm_referee.h"
 #include "string.h"
 #include "crc_ref.h"
 #include "bsp_usart.h"
-#include "bsp_usart.h"
+#include "rm_referee.h"
 // #include "daemon.h"
 
 
@@ -144,10 +142,18 @@ void Referee_RX_Handle(uint8_t *Buffer, uint8_t size) // 应放入接收中断
 	RefereeInit();
 }
 /**
- * @brief 裁判系统数据发送函数
+ * @brief 裁判系统数据发送函数 发送后似乎必须等一段时间才可以发送下一条指令
  * @param
  */
 void RefereeSend(uint8_t *send, uint16_t tx_len)
 {
-	HAL_UART_Transmit_DMA(&huart3, (uint8_t *)send, tx_len);
+//    // 等待上一次 DMA 传输完成
+//    while (__HAL_DMA_GET_FLAG(huart3.hdmatx, DMA_FLAG_TCIF1_5) == RESET);
+
+//    // 清除传输完成标志
+//    __HAL_DMA_CLEAR_FLAG(huart3.hdmatx, DMA_FLAG_TCIF1_5);
+
+    // 进行新一轮发送
+    HAL_UART_Transmit_DMA(&huart3, send, tx_len);
+
 }

@@ -21,7 +21,7 @@ float pid_error_input(pid_controler *PID, float err)
 	}
 
 	// err死区限制
-	if ((err - PID->err_dz) < 0.0001f && (err + PID->err_dz) > -0.0001f)
+	if ((err - PID->err_dz) < 0.001f && (err + PID->err_dz) > -0.001f)
 		err = 0;
 
 	PID->i_err += err;

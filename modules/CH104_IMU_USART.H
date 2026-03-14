@@ -80,24 +80,6 @@ typedef union __CH104_IMU_USART_Data_Union
     uint8_t Buffer[CH104_IMU_USART_BUFFER_LENGTH];
 } CH104_IMU_USART_Data_Union;
 
-
-
-
-typedef struct __CH104_IMU_USART_Angle_Sum_Struct
-{
-    float Angle_Sum_Value;
-    float Angle_Turn;
-    float Angle_Now;
-    float Angle_Last;
-} CH104_IMU_USART_Angle_Sum_Struct;
-
-typedef struct __CH104_IMU_USART_Euler_Angle_Sum_Struct
-{
-    CH104_IMU_USART_Angle_Sum_Struct Roll;
-    CH104_IMU_USART_Angle_Sum_Struct Pitch;
-    CH104_IMU_USART_Angle_Sum_Struct Yaw;
-}CH104_IMU_USART_Euler_Angle_Sum_Struct;
-
 typedef struct __CH104_IMU_USART_Struct
 {
     uint8_t Flag;
@@ -107,12 +89,8 @@ typedef struct __CH104_IMU_USART_Struct
     CH104_IMU_USART_State_enum State;
 
     CH104_IMU_USART_Data_Union Ret_Data;
-    CH104_IMU_USART_Euler_Angle_Sum_Struct Euler_Angle_Sum;
 } CH104_IMU_USART_Struct;
 #pragma pack() // 取消结构体对齐
-
-extern CH104_IMU_USART_Struct CH104_IMU_USART;
-
 
 void CH104_IMU_USART_Init(void);
 void CH104_IMU_USART_Timing_Handle(void);

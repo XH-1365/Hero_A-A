@@ -1,8 +1,8 @@
 /*
  * @Author: 励磁器狂人 9300491+exciter-maniac@user.noreply.gitee.com
  * @Date: 2024-08-12 11:50:54
- * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-14 18:39:22
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2024-09-11 19:36:46
  * @FilePath: \CAN_BSP\bsp\bsp_can.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,7 +31,7 @@ void Bsp_CAN_RX_Filter_Set(Bsp_CAN_RX_Filter_Struct *RX_Filter_Para)
                                                                                   // 所以掩码为0x7F0
                                                                                   // 至于为何要左移5位原因和上面一样
     can_filter_conf.FilterMaskIdLow = RX_Filter_Para->Filter_Mask_ID.Value.Low;
-    can_filter_conf.FilterFIFOAssignment = RX_Filter_Para->fifox;                // 选择CAN接收FIFO0
+    can_filter_conf.FilterFIFOAssignment = RX_Filter_Para->fifox; // 选择CAN接收FIFO0
     can_filter_conf.SlaveStartFilterBank = RX_Filter_Para->SlaveStartFilterBank; // can1(0-13)和can2(14-27)分别得到一半的filter
     can_filter_conf.FilterActivation = RX_Filter_Para->FilterActivation;
     HAL_CAN_ConfigFilter(RX_Filter_Para->hcan, &can_filter_conf);
@@ -44,30 +44,3 @@ void Bsp_CAN_Init(void)
     HAL_CAN_Start(&hcan2);
     HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING);
 }
-
-
-uint8_t Bsp_CAN_Transmit(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader,
-                         const uint8_t aData[], uint32_t *pTxMailbox)
-{
-    uint32_t TxMailboxX = CAN_TX_MAILBOX0; // CAN发送邮箱
-    // 找到空的发送邮箱 把数据发送出去
-    while (HAL_CAN_GetTxMailboxesFreeLevel(hcan) == 0)
-    {
-    }; // 如果三个发送邮箱都阻塞了就等待直到其中某个邮箱空闲
-
-    if ((hcan->Instance->TSR & CAN_TSR_TME0) != RESET)
-    {
-        // 检查发送邮箱0状态 如果邮箱0空闲
-        TxMailboxX = CAN_TX_MAILBOX0;
-    }
-    else if ((hcan->Instance->TSR & CAN_TSR_TME1) != RESET)
-    {
-        TxMailboxX = CAN_TX_MAILBOX1;
-    }
-    else if ((hcan->Instance->TSR & CAN_TSR_TME2) != RESET)
-    {
-        TxMailboxX = CAN_TX_MAILBOX2;
-    }
-    return HAL_CAN_AddTxMessage(hcan, pHeader, aData, (uint32_t *)TxMailboxX);
-}
-

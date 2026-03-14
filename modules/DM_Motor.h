@@ -9,7 +9,6 @@
 #ifndef _DM_Motor_H__
 #define _DM_Motor_H__
 #include "RM_typedef.h"
-#include "daemon.h"
 // 设置此参数输出最大-25 最小0，所以我在解析后让25+解析后的值
 #define P_MIN -3.1415f
 #define P_MAX 3.1415f
@@ -94,8 +93,6 @@ typedef union
 typedef struct __DM_Motor_Angle_Sum_Struct
 {
     float Angle_Sum_Value;
-    float Angle_Sum_Data;
-    float Angle_Sum_Offset;
     float Angle_Turn;
     float Angle_Now;
     float Angle_Last;
@@ -128,15 +125,12 @@ typedef struct __DM_Motor_Struct
     DM_Motor_Ret_Value_Struct Ret_Value;
     DM_Motor_Mode_enum Mode;
     DM_Motor_Ret_Para_Union Ret_Para; // 参数指令反馈报文
-    Daemon_Struct *Daemon;
 } DM_Motor_Struct;
 
 #pragma pack() // 取消结构体对齐
 extern DM_Motor_Struct DM_Motor_4310;
 
 void DM_Motor_Init(void);
-
-void DM_Motor_Clean_Angle_Sum(DM_Motor_Angle_Sum_Struct *Angle_Sum_Process);
 
 char DM_Motor_Get_Data(DM_Motor_Struct *DM_Motor_x, CAN_RxHeaderTypeDef *RxHeader, uint8_t *Motor_RX_Buffer);
 
@@ -145,8 +139,6 @@ void DM_Motor_Read_Data_Cmd(DM_Motor_Struct *DM_Motor_x);
 void DM_Motor_Save_Angle_Zero(DM_Motor_Struct *DM_Motor_x);
 
 void DM_Motor_Set_State(DM_Motor_Struct *DM_Motor_x, FunctionalState State);
-
-void DM_Motor_Clear_Error(DM_Motor_Struct *DM_Motor_x);
 
 void DM_Motor_Read_Para_Cmd(DM_Motor_Struct *DM_Motor_x, DM_Motor_Register_enum Reg_ID);
 

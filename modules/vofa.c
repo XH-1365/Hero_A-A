@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include "bsp_usart.h"
 #define VOFA_BUFFER_SIZE 100
 const uint8_t TX_JustFloat_Tail[4] = {0x00, 0x00, 0x80, 0x7f};
 
@@ -30,7 +29,6 @@ void Vofa_Init(void)
   Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_KP].Head = "angle_kp:";
   Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_KI].Head = "angle_ki:";
   Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_KD].Head = "angle_kd:";
-  Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_KF].Head = "angle_kf:";
   Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_SW].Head = "angle_sw:";
   Vofa_Data.RX_FireWater.Data[VOFA_RX_ANGLE_TAR].Head = "angle_tar:";
 
@@ -180,17 +178,15 @@ void Vofa_Receive_Handle(void)
 
 void Vofa_Transmit(void)
 {
-    #if huart8_control
-    HAL_UART_Transmit_DMA(&huart8, (uint8_t *)(&(Vofa_Data.TX_JustFloat)), sizeof(TX_Struct));
-    #endif
+  HAL_UART_Transmit_DMA(&huart8, (uint8_t *)(&(Vofa_Data.TX_JustFloat)), sizeof(TX_Struct));
 }
 
 void Vofa_print(char *fmt, ...)
 {
-  va_list args;                                                                                    // 记录输入的参数
-  uint16_t length;                                                                                 // 用于记录字符串长度
-  va_start(args, fmt);                                                                             // 对字符串进行转换
-  length = (uint16_t)vsnprintf((char *)Vofa_Send_Buffer, sizeof(Vofa_Send_Buffer) - 1, fmt, args); // 开始对DMA_Send_Buffer赋值，并返回字符串长度
+  va_list args;                                                                  // 记录输入的参数
+  uint16_t length;                                                                    // 用于记录字符串长度
+  va_start(args, fmt);                                                           // 对字符串进行转换
+  length =(uint16_t) vsnprintf((char *)Vofa_Send_Buffer, sizeof(Vofa_Send_Buffer) - 1, fmt, args); // 开始对DMA_Send_Buffer赋值，并返回字符串长度
   if (length > VOFA_BUFFER_SIZE - 1)
   {
     length = VOFA_BUFFER_SIZE - 1; // 防止超出数组界限

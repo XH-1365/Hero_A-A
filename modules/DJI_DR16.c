@@ -47,7 +47,7 @@ void DJI_DR16_Data_Process(uint8_t *Buffer, uint8_t size)
     DJI_DR16_Data.RC.S1 = ((Buffer[5] >> 4) & 0x000C) >> 2;
     DJI_DR16_Data.RC.S2 = ((Buffer[5] >> 4) & 0x0003);
 
-    DJI_DR16_Data.RC_Value.CH0 = NORMALIZE(DJI_DR16_Data.RC.CH0, 364, 1684) ; // 数据归一化为（-1~1）
+    DJI_DR16_Data.RC_Value.CH0 = NORMALIZE(DJI_DR16_Data.RC.CH0, 364, 1684) - 0.042424f; // 数据归一化为（-1~1）
     DJI_DR16_Data.RC_Value.CH1 = NORMALIZE(DJI_DR16_Data.RC.CH1, 364, 1684);             // 数据归一化为（-1~1）
     DJI_DR16_Data.RC_Value.CH2 = NORMALIZE(DJI_DR16_Data.RC.CH2, 364, 1684);             // 数据归一化为（-1~1）
     DJI_DR16_Data.RC_Value.CH3 = NORMALIZE(DJI_DR16_Data.RC.CH3, 364, 1684);             // 数据归一化为（-1~1）

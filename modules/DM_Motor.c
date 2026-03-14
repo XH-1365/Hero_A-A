@@ -1,8 +1,8 @@
 /*
  * @Author: liciqikuanren 1072047735@qq.com
  * @Date: 2024-10-01 14:54:37
- * @LastEditors: liciqikuanren 104132901+liciqikuanren@users.noreply.github.com
- * @LastEditTime: 2025-03-17 16:45:28
+ * @LastEditors: liciqikuanren 1072047735@qq.com
+ * @LastEditTime: 2024-10-15 20:54:21
  * @FilePath: \RM_Template\modules\DM_Motor.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -35,9 +35,9 @@ void DM_Motor_RX_Filter_Set(void)
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.IDE = 1; // 必须为标准帧
     Bsp_CAN_RX_Filter_config.Filter_Mask_ID.Sub.RTR = 1; // 必须为数据帧
 
-    Bsp_CAN_RX_Filter_config.FilterBank = CAN1_FILTER_ID_DM_MOTOR; // 过滤器编号  CAN过滤器有很多个选择其中一个即可
-    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14;            // 起始过滤器编号应该为14，这样的话 can1(0-13)和can2(14-27)就能分别得到一半的filter
-    Bsp_CAN_RX_Filter_config.hcan = &hcan1;                        // 选择CAN1或者CAN2
+    Bsp_CAN_RX_Filter_config.FilterBank = CAN1_FILTER_ID_DM_MOTOR;           // 过滤器编号  CAN过滤器有很多个选择其中一个即可
+    Bsp_CAN_RX_Filter_config.SlaveStartFilterBank = 14;// 起始过滤器编号应该为14，这样的话 can1(0-13)和can2(14-27)就能分别得到一半的filter
+    Bsp_CAN_RX_Filter_config.hcan = &hcan1;            // 选择CAN1或者CAN2
     Bsp_CAN_RX_Filter_config.fifox = CAN_FilterFIFO0;
     Bsp_CAN_RX_Filter_config.FilterActivation = CAN_FILTER_ENABLE;
     Bsp_CAN_RX_Filter_Set(&Bsp_CAN_RX_Filter_config);
@@ -53,8 +53,6 @@ void DM_Motor_Init(void)
     DM_Motor_4310.RX_STD_ID = DM_RX_STD_ID;
     DM_Motor_4310.TX_STD_ID = DM_TX_STD_ID;
     DM_Motor_RX_Filter_Set();
-    DM_Motor_Clean_Angle_Sum(&(DM_Motor_4310.Ret_Value.Angle_Sum_Process));
-    DM_Motor_4310.Daemon = Daemon_Register(DAE_DM_4310, 100, NULL, ENABLE);
 }
 
 /**
@@ -100,26 +98,16 @@ float DM_Motor_Get_Angle_Sum(DM_Motor_Angle_Sum_Struct *Angle_Sum_Process, float
 
     Angle_Sum_Process->Angle_Last = Angle_Sum_Process->Angle_Now;
     Angle_Sum_Process->Angle_Now = Angle_Value;
-    if ((Angle_Sum_Process->Angle_Last - Angle_Sum_Process->Angle_Now) > (Jump_Value - 0.5f))
+    if ((Angle_Sum_Process->Angle_Last - Angle_Sum_Process->Angle_Now) > (Jump_Value - 0.2f))
     {
         (Angle_Sum_Process->Angle_Turn) += Jump_Value;
     }
-    else if ((Angle_Sum_Process->Angle_Last - Angle_Sum_Process->Angle_Now) < -(Jump_Value - 0.5f))
+    else if ((Angle_Sum_Process->Angle_Last - Angle_Sum_Process->Angle_Now) < -(Jump_Value - 0.2f))
     {
         (Angle_Sum_Process->Angle_Turn) -= Jump_Value;
     }
-    Angle_Sum_Process->Angle_Sum_Data = (Angle_Sum_Process->Angle_Turn) + (Angle_Sum_Process->Angle_Now);
-    Angle_Sum_Process->Angle_Sum_Value = Angle_Sum_Process->Angle_Sum_Data + Angle_Sum_Process->Angle_Sum_Offset;
+    Angle_Sum_Process->Angle_Sum_Value = (Angle_Sum_Process->Angle_Turn) + (Angle_Sum_Process->Angle_Now);
     return Angle_Sum_Process->Angle_Sum_Value;
-}
-
-void DM_Motor_Clean_Angle_Sum(DM_Motor_Angle_Sum_Struct *Angle_Sum_Process)
-{
-    Angle_Sum_Process->Angle_Now = 0.0f;
-    Angle_Sum_Process->Angle_Turn = 0.0f;
-    Angle_Sum_Process->Angle_Sum_Data = 0.0f;
-    Angle_Sum_Process->Angle_Sum_Value = 0.0f;
-    Angle_Sum_Process->Angle_Sum_Offset = (Angle_Sum_Process->Angle_Sum_Data) * -1.0f;
 }
 static void DM_Motor_Set_Ret(DM_Motor_Struct *DM_Motor_x, uint8_t *Motor_RX_Buffer)
 {
@@ -134,7 +122,7 @@ static void DM_Motor_Set_Ret(DM_Motor_Struct *DM_Motor_x, uint8_t *Motor_RX_Buff
     DM_Motor_x->Ret_Value.Angle = 2 * P_MAX + uint_to_float(DM_Motor_x->Ret_Data.Data.Angle, P_MIN, P_MAX, 16);
     DM_Motor_x->Ret_Value.Speed = uint_to_float(DM_Motor_x->Ret_Data.Data.Speed, V_MIN, V_MAX, 12);
     DM_Motor_x->Ret_Value.Tprque = uint_to_float(DM_Motor_x->Ret_Data.Data.Tprque, T_MIN, T_MAX, 12);
-    DM_Motor_Get_Angle_Sum(&(DM_Motor_x->Ret_Value.Angle_Sum_Process), DM_Motor_x->Ret_Value.Angle, PIX2, 0.0f);
+    DM_Motor_Get_Angle_Sum(&(DM_Motor_x->Ret_Value.Angle_Sum_Process),  DM_Motor_x->Ret_Value.Angle,PIX2, 0.0f);
 }
 
 char DM_Motor_Get_Data(DM_Motor_Struct *DM_Motor_x, CAN_RxHeaderTypeDef *RxHeader, uint8_t *Motor_RX_Buffer)
@@ -157,7 +145,6 @@ char DM_Motor_Get_Data(DM_Motor_Struct *DM_Motor_x, CAN_RxHeaderTypeDef *RxHeade
             DM_Motor_Set_Ret(DM_Motor_x, Motor_RX_Buffer);
         }
 
-        Daemon_Reload(DM_Motor_4310.Daemon);
         return SUCCESS;
     }
 
@@ -176,7 +163,7 @@ void DM_Motor_Send_Cmd(DM_Motor_Struct *DM_Motor_x, int16_t TX_STD_ID, uint8_t C
     if (BSP_CAN_TRANSMIT(DM_Motor_x->hcan, &TxHeader, Cmd, &TxMailbox) != HAL_OK)
     {
         /* Reception Error */
-        //        Error_Handler();
+        Error_Handler();
     }
 }
 

@@ -29,8 +29,6 @@ rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_c
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
-rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
-rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
@@ -38,9 +36,8 @@ rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_t
 rm_template\bsp_usart_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 rm_template\bsp_usart_isr.o: ../modules/DJI_DR16.h
 rm_template\bsp_usart_isr.o: ../bsp/RM_typedef.h
-rm_template\bsp_usart_isr.o: ../modules/DJI_VT13.h
+rm_template\bsp_usart_isr.o: ../application/robot_config.h
 rm_template\bsp_usart_isr.o: ../modules/vofa.h
 rm_template\bsp_usart_isr.o: ../modules/CH104_IMU_USART.H
-rm_template\bsp_usart_isr.o: ../modules/referee/rm_referee.h
-rm_template\bsp_usart_isr.o: ../modules/referee/referee_protocol.h
-rm_template\bsp_usart_isr.o: ../modules/mini_pc.h
+rm_template\bsp_usart_isr.o: ..\modules\referee\rm_referee.h
+rm_template\bsp_usart_isr.o: ..\modules\referee\referee_protocol.h

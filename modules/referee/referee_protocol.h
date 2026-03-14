@@ -93,8 +93,8 @@ typedef enum
 	LEN_game_robot_HP = 2,						 // 0x0003
 	LEN_event_data = 4,							 // 0x0101
 	LEN_supply_projectile_action = 4,			 // 0x0102
-	LEN_game_robot_state = 27,					 // 0x0201
-	LEN_power_heat_data = 14,					 // 0x0202
+	LEN_game_robot_state = 13,					 // 0x0201
+	LEN_power_heat_data = 16,					 // 0x0202
 	LEN_game_robot_pos = 16,					 // 0x0203
 	LEN_buff_musk = 1,							 // 0x0204
 	LEN_aerial_robot_energy = 1,				 // 0x0205
@@ -157,37 +157,32 @@ typedef struct
 	uint8_t supply_projectile_num;
 } ext_supply_projectile_action_t;
 
-/* ID: 0X0201  Byte: 27    机器人状态数据 */
+/* ID: 0X0201  Byte: 13    机器人状态数据 */
 typedef struct
 {
-	uint8_t robot_id;
-	uint8_t robot_level;
-	uint16_t remain_HP;
-	uint16_t max_HP;
-	uint16_t shooter_id1_17mm_cooling_rate;
-	uint16_t shooter_id1_17mm_cooling_limit;
-	uint16_t shooter_id1_17mm_speed_limit;
-	uint16_t shooter_id2_17mm_cooling_rate;
-	uint16_t shooter_id2_17mm_cooling_limit;
-	uint16_t shooter_id2_17mm_speed_limit;
-	uint16_t shooter_id1_42mm_cooling_rate;
-	uint16_t shooter_id1_42mm_cooling_limit;
-	uint16_t shooter_id1_42mm_speed_limit;
-	uint16_t chassis_power_limit;
-	uint8_t mains_power_gimbal_output : 1;
-	uint8_t mains_power_chassis_output : 1;
-	uint8_t mains_power_shooter_output : 1;
+	uint8_t robot_id;							 // 本机器人ID
+	uint8_t robot_level;						 // 机器人等级
+	uint16_t current_HP;						 // 机器人当前血量
+	uint16_t maximum_HP;						 // 机器人血量上限
+	uint16_t shooter_barrel_cooling_value;		 // 机器人枪口热量每秒冷却值
+	uint16_t shooter_barrel_heat_limit;			 // 机器人枪口热量上限
+	uint16_t chassis_power_limit;				 // 机器人底盘功率上限
+	uint8_t power_management_gimbal_output : 1;	 // gimbal口输出：0为无输出，1为24V输出
+	uint8_t power_management_chassis_output : 1; // chassis口输出：0为无输出，1为24V输出
+	uint8_t power_management_shooter_output : 1; // shooter口输出：0为无输出，1为24V输出
+	uint8_t None : 5;							 // 保留无功能
 } ext_game_robot_state_t;
 
-/* ID: 0X0202  Byte: 14    实时功率热量数据 */
+/* ID: 0X0202  Byte: 16    实时功率热量数据 */
 typedef struct
 {
-	uint16_t chassis_volt;
-	uint16_t chassis_current;
-	float chassis_power;		   // 瞬时功率
-	uint16_t chassis_power_buffer; // 60焦耳缓冲能量
-	uint16_t shooter_heat0;		   // 17mm
-	uint16_t shooter_heat1;
+	uint16_t chassis_volt;		   // 电源管理模块的chassis口输出电压（单位：mV）
+	uint16_t chassis_current;	   // 电源管理模块的chassis口输出电流（单位：mA）
+	float chassis_power;		   // 瞬时功率  底盘功率（单位：W）
+	uint16_t chassis_power_buffer; // 60焦耳缓冲能量 （单位：J）
+	uint16_t shooter_heat0_17mm;   // 17mm发射机构枪口热量
+	uint16_t shooter_heat1_17mm;   // 17mm发射机构枪口热量
+	uint16_t shooter_heat_42mm;	   // 42mm发射机构枪口热量
 } ext_power_heat_data_t;
 
 /* ID: 0x0203  Byte: 16    机器人位置数据 */
@@ -353,9 +348,9 @@ typedef enum
 /* 图形配置参数__图形操作 */
 typedef enum
 {
-	UI_Graph_ADD = 1,
-	UI_Graph_Change = 2,
-	UI_Graph_Del = 3,
+	UI_Graph_ADD = 1,//增加
+	UI_Graph_Change = 2,//改变
+	UI_Graph_Del = 3,   //删除
 } UI_Graph_Operate_e;
 
 /* 图形配置参数__图形类型 */

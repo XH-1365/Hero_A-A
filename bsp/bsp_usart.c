@@ -9,27 +9,11 @@
 #include "bsp_usart.h"
 
 uint8_t USART6_RX_Buffer[100];
-uint8_t USART6_TX_Buffer[16] = "Hello World!!\r\n";
-
-void BSP_USART6_Config(void)
-{
-  huart6.Instance = USART6;
-  huart6.Init.BaudRate = 921600;
-  huart6.Init.WordLength = UART_WORDLENGTH_8B;
-  huart6.Init.StopBits = UART_STOPBITS_1;
-  huart6.Init.Parity = UART_PARITY_NONE;
-  huart6.Init.Mode = UART_MODE_TX_RX;
-  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart6) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
+uint8_t USART6_TX_Buffer[16]="Hello World!!\r\n";
 
 void BSP_USART_Init(void)
 {
-  HAL_UART_Transmit_DMA(&huart6, (uint8_t *)USART6_TX_Buffer, sizeof(USART6_TX_Buffer) - 1);
+  HAL_UART_Transmit_DMA(&huart6, (uint8_t *)USART6_TX_Buffer, sizeof(USART6_TX_Buffer)-1);
   HAL_UARTEx_ReceiveToIdle_DMA(&huart6, USART6_RX_Buffer, sizeof(USART6_RX_Buffer)); // 串口空闲中断接收DMA
-  __HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);                                  // 关闭DMA接收一半中断
+  __HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);               //关闭DMA接收一半中断
 }

@@ -27,8 +27,6 @@ rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
-rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
-rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 rm_template\vofa.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
@@ -41,4 +39,3 @@ rm_template\vofa.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdlib.h
 rm_template\vofa.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\string.h
 rm_template\vofa.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdio.h
 rm_template\vofa.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdarg.h
-rm_template\vofa.o: ../bsp/bsp_usart.h
