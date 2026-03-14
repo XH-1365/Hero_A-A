@@ -1,6 +1,7 @@
 #include "gimbal.h"
 #include "DJI_Motor.h"
 #include "DJI_DR16.h"
+#include "DJI_VT13.h"
 #include "CH104_IMU_CAN.h"
 #include "CH104_IMU_USART.H"
 #include "vofa.h"
@@ -8,6 +9,7 @@
 #include <math.h>
 #include "can_comm.h"
 #include "bsp_usart.h"
+
 #define DR16_YAW_ANGLE -(DJI_DR16_Data.RC_Value.CH2)
 #define DR16_PITCH_ANGLE DJI_DR16_Data.RC_Value.CH3
 // Pitch 轴上限位开关
@@ -153,7 +155,7 @@ void Gimbal_Init(void)
     Gimbal.Yaw.Speed_Tar = 0;
     PID_Init(&Gimbal.Yaw.Pid_Speed);
     // PID_Set(&Gimbal.Yaw.Pid_Speed, 14, 0.01, 0, 0.05, 0.0001, 0.99);
-    PID_Set(&Gimbal.Yaw.Pid_Speed, 7.5f, 0, 0.1, 1, 0.000005, 0.99);
+    PID_Set(&Gimbal.Yaw.Pid_Speed, 7.4f, 0.01, 1, 0.2, 0.000005, 0.99);
 
     Gimbal.Yaw.Angle_Tar = 0;
     PID_Init(&Gimbal.Yaw.Pid_Angle);
@@ -484,16 +486,20 @@ void Gimbal_Control_Handle(void)
              Gimbal.Yaw.Filter_Speed_FF.Output=  Low_Pass_Filter(&Gimbal.Yaw.Filter_Speed_FF, Gimbal.Yaw.Speed_Feedforward_Value);
 
             // Yaw轴速度环
-            if(   Gimbal.Yaw.Speed_Tar <0.35f  && Gimbal.Yaw.Speed_Tar >(-0.35f))  
+            if(   Gimbal.Yaw.Speed_Tar <0.35f  && Gimbal.Yaw.Speed_Tar >(-0.35f)&& (DJI_VT13_Data.Remote.mouse_right))  
             {
                 if(Gimbal.Yaw.Speed_Tar>0)
-                    Gimbal.Yaw.Speed_Tar +=0.010f;
+                    Gimbal.Yaw.Speed_Tar +=0.015f;
                 else
-                    Gimbal.Yaw.Speed_Tar -=0.01f;
+                    Gimbal.Yaw.Speed_Tar -=0.015f;
             }
-
-            Gimbal.Yaw.Pid_Speed.err = Gimbal.Yaw.Speed_Tar + Yaw_Angle_F_Out - YAW_GYRO_SPEED ;
-            // Gimbal.Yaw.Pid_Speed.err = Gimbal.Yaw.Speed_Tar - YAW_SPEED;
+            
+           
+                Gimbal.Yaw.Pid_Speed.err = Gimbal.Yaw.Speed_Tar + Yaw_Angle_F_Out - YAW_GYRO_SPEED ;
+             if(  ( Gimbal.Yaw.Pid_Speed.err >0.01f || Gimbal.Yaw.Pid_Speed.err <(-0.01f)) && (DJI_VT13_Data.Remote.mouse_right))
+            {
+               Gimbal.Yaw.Pid_Speed.err +=triangle_wave(50,0.025f,0.001);
+            }
             Gimbal.Yaw.Pid_Speed.output = pid_error_input(&Gimbal.Yaw.Pid_Speed, Gimbal.Yaw.Pid_Speed.err);
 
             // Gimbal.Yaw.Speed_Feedforward_Value = 0;

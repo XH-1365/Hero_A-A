@@ -16,7 +16,26 @@ static void Quadratic_formula(float a, float b, float c, float *x1, float *x2)
 }
 
 
-
+/**
+ * @brief 生成对称三角波，范围 [-amp, amp]
+ * @param freq 三角波频率 (Hz)
+ * @param amp  三角波幅值 (与速度指令单位一致)
+ * @param dt   控制周期 (秒)，即两次调用之间的时间间隔
+ * @return     当前时刻的三角波值
+ */
+float triangle_wave(float freq, float amp, float dt) {
+    static float phase = 0.0f;          // 相位 [0, 1)
+    
+    // 更新相位
+    phase += freq * dt;
+    if (phase >= 1.0f) {
+        phase -= 1.0f;
+    }
+    
+    // 计算三角波：y = amp * (1 - 4 * |t - 0.5|)
+    float t = phase;
+    return amp * (1.0f - 4.0f * fabsf(t - 0.5f));
+}
 
 
 /// @brief 输入角度得到丝杆的位置

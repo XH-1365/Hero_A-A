@@ -39,7 +39,7 @@ void Data_Processing(uint8_t *Mini_PC_RX_BUFF , uint8_t size)
             mini_pitch= (pitch-9000)/(-100.f);
 
             Mini_pc_Data.yaw  = mini_yaw/5000.f;
-            Mini_pc_Data.pitch=mini_pitch/10000.f;
+            Mini_pc_Data.pitch=mini_pitch/5000.f;
         }
     }
 }
