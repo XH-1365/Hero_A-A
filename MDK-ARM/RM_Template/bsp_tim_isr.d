@@ -9,7 +9,7 @@ rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Include/core_cm4.h
-rm_template\bsp_tim_isr.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+rm_template\bsp_tim_isr.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdint.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Include/cmsis_version.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -17,7 +17,7 @@ rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 rm_template\bsp_tim_isr.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-rm_template\bsp_tim_isr.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+rm_template\bsp_tim_isr.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stddef.h
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
@@ -36,6 +36,7 @@ rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim
 rm_template\bsp_tim_isr.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 rm_template\bsp_tim_isr.o: ../modules/DJI_Motor.h
 rm_template\bsp_tim_isr.o: ../bsp/RM_typedef.h
+rm_template\bsp_tim_isr.o: ../application/robot_config.h
 rm_template\bsp_tim_isr.o: ../application/chassis.h
 rm_template\bsp_tim_isr.o: ../modules/pid.h
 rm_template\bsp_tim_isr.o: ../modules/filter.h
@@ -50,3 +51,4 @@ rm_template\bsp_tim_isr.o: ..\modules\referee\rm_referee.h
 rm_template\bsp_tim_isr.o: ../Core/Inc/usart.h
 rm_template\bsp_tim_isr.o: ..\modules\referee\referee_protocol.h
 rm_template\bsp_tim_isr.o: ../bsp/bsp_usart.h
+rm_template\bsp_tim_isr.o: ../modules/super_cap.h

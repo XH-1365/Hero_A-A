@@ -64,20 +64,8 @@ void Remote_Control_Set()
     //     DJI_DR16_Data.RC_Value.CH1 / -2);
 
     // switch (DJI_DR16_Data.RC_Value.S1)
-    switch (Chassis_Control_Data.Mode)
-    {
-    case 2:
-        Chassis_Set_Mode(CHASSIS_PEG_TOP);
+    Chassis_Set_Mode(Chassis_Control_Data.Mode);
 
-        break;
-
-    case 3:
-        Chassis_Set_Mode(CHASSIS_FOLLOW);
-        break;
-
-    default:
-        break;
-    }
 
     Chassis_Set_Power_Mode(Chassis_Control_Data.Super_Mode);
 }

@@ -31,6 +31,8 @@ typedef union
 
 typedef struct __Super_Cap_Struct
 {
+        uint16_t Time_out;
+    
     CAN_HandleTypeDef *hcan; // 使用的CAN口，hcan1或者hcan2
     int16_t TX_STD_ID;
     int16_t RX_STD_ID;
@@ -44,7 +46,7 @@ extern Super_Cap_Struct Super_Cap;
 char Super_Cap_Get_Data(Super_Cap_Struct *Super_Cap_x, CAN_RxHeaderTypeDef *RxHeader, uint8_t *CAN_RX_Buffer);
 
 void Super_Cap_init(void);
-
+void Super_Cap_Timing_Handle();
 void Super_Cap_Set_Power(Super_Cap_Struct *Super_Cap_x, uint16_t Target_Power);
 
 #endif

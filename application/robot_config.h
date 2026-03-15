@@ -9,8 +9,8 @@
 #ifndef _ROBOT_CONFIG_H__
 #define _ROBOT_CONFIG_H__
 //如果有裁判系统则定义为1否则为0
-// #define HAVE_REFEREE 1
-#define HAVE_REFEREE 0
+ #define HAVE_REFEREE 1
+//#define HAVE_REFEREE 0
 
 
 

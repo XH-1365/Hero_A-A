@@ -57,8 +57,9 @@
 
 typedef enum __Chassis_Mode_enum
 {
-  CHASSIS_FOLLOW = 2,      // 跟随模式
-  CHASSIS_PEG_TOP = 3,    // 小陀螺模式
+    CHASSIS_RESET = 1,       // 云台复位
+    CHASSIS_FOLLOW = 2,      // 跟随模式
+    CHASSIS_PEG_TOP = 3,    // 小陀螺模式
 
 } Chassis_Mode_enum;
 
@@ -74,7 +75,9 @@ typedef struct __Chassis_Struct
 {
   uint16_t Flag;
   uint16_t Count;
-
+  uint8_t  Time_out; 
+  uint8_t  DM_Time_out; 
+    
   float M1_Speed;
   pid_controler M1_Pid_Speed;
 
@@ -138,7 +141,7 @@ void Chassis_Init(void);
 
 void Chassis_Set_Mode(Chassis_Mode_enum Mode);
 void Chassis_Control(float X_Speed, float Y_Speed);
-
+void Chassis_Set_Power_Mode(Chassis_Power_Mode_enum Mode);
 void Chassis_Timing_Handle(void);
 void Chassis_Task(void);
 #endif

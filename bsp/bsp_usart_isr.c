@@ -25,20 +25,11 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
   else if (huart == &huart1) //  将上位机发来的数据完整的返回 回去
   {
     DR16_RX_Handle(DJI_DR16_Get_Buffer(), Size);
-    //    sprintf(str, "CH0:%u,CH1:%u,CH2:%u,CH3:%u,Wheel:%u,S1:%u,S2:%u\r\n",
-    //            DJI_DR16_Data.RC.CH0,
-    //            DJI_DR16_Data.RC.CH1,
-    //            DJI_DR16_Data.RC.CH2,
-    //            DJI_DR16_Data.RC.CH3,
-    //            DJI_DR16_Data.RC.Wheel,
-    //            DJI_DR16_Data.RC.S1,
-    //            DJI_DR16_Data.RC.S2);
-
-    // HAL_UART_Transmit_DMA(&huart6,DJI_DR16_Get_Buffer(),Size);
-    //  HAL_UART_Transmit_DMA(&huart6,(uint8_t*)str, strlen(str));
   }
   else if (huart == &huart3) //  接收裁判系统发送的数据
   {
     Referee_RX_Handle(Referee_Get_Buffer(), Size);
+   referee_timeout=250;
+   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_4, GPIO_PIN_RESET);
   }
 }

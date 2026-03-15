@@ -52,7 +52,7 @@ float DM_Angle_Test = 0;
 void App_Init(void)
 {
 
-	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7 | GPIO_PIN_6 | GPIO_PIN_5 | GPIO_PIN_4 | GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_8, GPIO_PIN_RESET);
 
 	//	CH104_IMU_USART_Init();
 
@@ -69,7 +69,7 @@ void App_Init(void)
 	BSP_TIM_Init();
 	Robot_Cmd_Init();
 	Chassis_Init();
-// 已设置成无裁判系统模式，若有的话请在robot_config.h
+// 已设置成无裁判系统模式，若有的话请在robot_config.h里设置HAVE_REFEREE 为1
 
 #if HAVE_REFEREE
 	RefereeInit();

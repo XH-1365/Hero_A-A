@@ -178,21 +178,8 @@ char DJI_Motor_Get_Data(DJI_Motor_Group_enum DJI_MGRPx, CAN_RxHeaderTypeDef *RxH
 
     RX_StdId = RxHeader->StdId;
 
-    // switch (DJI_MGRPx)
-    // {
-    // case DJI_MGRP1:
-    //     DJI_Motor_RX_SUM = DJI_MGRP1_RX_SUM;
-    //     break;
-    // case DJI_MGRP2:
-    //     DJI_Motor_RX_SUM = DJI_MGRP2_RX_SUM;
-    //     break;
-    // case DJI_MGRP3:
-    //     DJI_Motor_RX_SUM = DJI_MGRP3_RX_SUM;
-    //     break;
 
-    // default:
-    //     return ERROR;
-    // }
+
 
     DJI_Motor_RX_SUM = Motor_Group[DJI_MGRPx].Data_Length;
     // 判断接收到的ID是否大于CAN接收数据帧ID偏移，大于才能通过否则return
@@ -209,6 +196,10 @@ char DJI_Motor_Get_Data(DJI_Motor_Group_enum DJI_MGRPx, CAN_RxHeaderTypeDef *RxH
         return ERROR;
     }
 
+     if(DJI_MGRP1==DJI_MGRPx)
+     {
+         HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET);
+     }
     Motor_Group[DJI_MGRPx].Data[RX_num].Ret.RX_Flag = 1;
     DJI_Motor_Set_Ret(Motor_RX_Buffer, DJI_MGRPx, RX_num);
     return SUCCESS;

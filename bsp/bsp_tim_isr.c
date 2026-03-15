@@ -17,6 +17,8 @@
 #include "CH104_IMU_USART.H"
 #include "can_comm.h"
 #include "referee_task.h"
+#include "super_cap.h"
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   // uint8_t i = 0;
@@ -32,5 +34,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     CH104_IMU_USART_Timing_Handle();
     CAN_Comm_Timing_Handle();
     UI_Task_Timing();
+      Super_Cap_Timing_Handle();
   }
 }

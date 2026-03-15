@@ -31,6 +31,7 @@ static referee_info_t *referee_recv_info;            // 接收到的裁判系统
 Referee_Interactive_info_t ui_data;                  // UI数据，将底盘中的数据传入此结构体的对应变量中，UI会自动检测是否变化，对应显示UI
 uint8_t UI_Seq;                                      // 包序号，供整个referee文件使用
 UI_Task_Struct UI_Instance;
+uint8_t referee_timeout;
 // @todo 不应该使用全局变量
 
 static void MyUIRefresh(referee_info_t *referee_recv_info, Referee_Interactive_info_t *_Interactive_data);
@@ -66,6 +67,11 @@ void UI_Task_Timing(void)
     if (UI_Instance.Count > 0)
     {
         UI_Instance.Count--;
+    }
+    if(referee_timeout--==0)
+    {
+        referee_timeout=250;
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_4, GPIO_PIN_SET);
     }
 }
 

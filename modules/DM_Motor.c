@@ -145,6 +145,8 @@ char DM_Motor_Get_Data(DM_Motor_Struct *DM_Motor_x, CAN_RxHeaderTypeDef *RxHeade
             DM_Motor_Set_Ret(DM_Motor_x, Motor_RX_Buffer);
         }
 
+        
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_5, GPIO_PIN_RESET);
         return SUCCESS;
     }
 

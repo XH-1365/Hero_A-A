@@ -9,7 +9,7 @@
 // #include "FreeRTOS.h"
 
 extern uint8_t UI_Seq;
-
+extern uint8_t referee_timeout;
 #pragma pack(1)
 typedef struct
 {

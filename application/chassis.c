@@ -46,8 +46,6 @@ M3↓        M4↑
 
 #define CHASSIS_VOFA_DEBUG 0
 
-// #define CHASSIA_LEVEL  referee_info.GameRobotState.robot_level
-
 #if HAVE_REFEREE
 #define CHASSIA_LEVEL referee_info.GameRobotState.robot_level
 #else
@@ -135,7 +133,21 @@ void Chassis_Gimbal_Yaw_Err_Dz_Control(void)
 
 void Chassis_Set_Mode(Chassis_Mode_enum Mode)
 {
-    Chassis.Mode = Mode;
+    switch (Mode)
+    {
+     case 1 :
+        Chassis.Mode=CHASSIS_RESET;
+        break;
+    case 2:
+        Chassis.Mode=CHASSIS_PEG_TOP;
+        break;
+    case 3:
+        Chassis.Mode=CHASSIS_FOLLOW;
+        break;
+
+    default:
+        break;
+    }
 }
 void Chassis_Set_Power_Mode(Chassis_Power_Mode_enum Mode)
 {
@@ -154,47 +166,18 @@ void Chassis_Timing_Handle(void)
     {
         Chassis.Count--;
     }
-}
-// 获取裁判系统最大限制功率 单位：w
-float Chassis_Get_Referee_Power_Mx_Limit(uint8_t Level)
-{
-    switch (Level)
+    if(Chassis.Time_out--==0)
     {
-    case 1:
-        return 45.0f;
-
-    case 2:
-        return 50.0f;
-
-    case 3:
-        return 55.0f;
-
-    case 4:
-
-        return 60.0f;
-
-    case 5:
-        return 65.0f;
-
-    case 6:
-        return 70.0f;
-
-    case 7:
-        return 75.0f;
-
-    case 8:
-        return 80.0f;
-
-    case 9:
-        return 90.0f;
-
-    case 10:
-        return 100.0f;
-
-    default:
-        return 45.0f;
+        Chassis.Time_out=250;
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET);
+    }
+    if(Chassis.DM_Time_out--==0)
+    {
+        Chassis.DM_Time_out=250;
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_5, GPIO_PIN_SET);
     }
 }
+
 
 // 不同等级的设置（超电设置，速度曲线测试）
 void Chassis_Level_Control(void)
@@ -207,19 +190,18 @@ void Chassis_Level_Control(void)
         Count--;
     }
     Chassis.Level = CHASSIA_LEVEL;
-    // Chassis.Level = referee_info.GameRobotState.robot_level;
-    //   测试用————————————————————————————————————
-    // Chassis.Level =10;
+
     switch (Flag)
     {
     case 0:
 
-        if (Chassis.Level != Chassis.Level_Last)
-        {
-            Super_Cup_Tar_Power = (uint16_t)(Chassis_Get_Referee_Power_Mx_Limit(Chassis.Level) * 100.0f) + 2000;
+//        if (Chassis.Level != Chassis.Level_Last)
+//        {
+//            Super_Cup_Tar_Power = (uint16_t)(Chassis_Get_Referee_Power_Mx_Limit(Chassis.Level) * 100.0f) + 2000;
+            Super_Cup_Tar_Power = 10000.0f;//100W
             Super_Cap_Set_Power(&Super_Cap, Super_Cup_Tar_Power);
             Count = 20;
-        }
+//        }
         Chassis.Level_Last = Chassis.Level;
 
         break;
@@ -236,10 +218,8 @@ void Chassis_Power_Control(void)
     Chassis.Motor_Power_Now[3] = Motor_3508_Calculat_Power(M4_SPEED * MOTOR_SPEED_RADIAN_MAX, M4_CURRENT * MOTOR_CURRENT_MAX);
     Chassis.Power_Sum_Now = Calculat_Power_Sum(Chassis.Motor_Power_Now, sizeof(Chassis.Motor_Power_Now) / sizeof(float));
 
-    // 测试用————————————————————————————————————
-    //  Chassis.Level =10;
-
-    Chassis.Referee_Power_Mx_Limit = Chassis_Get_Referee_Power_Mx_Limit(Chassis.Level); // 获取裁判系统底盘功率最大上限值
+//    Chassis.Referee_Power_Mx_Limit = Chassis_Get_Referee_Power_Mx_Limit(Chassis.Level); // 获取裁判系统底盘功率最大上限值
+    Chassis.Referee_Power_Mx_Limit =100;
     Chassis.Power_Buffer = referee_info.PowerHeatData.chassis_power_buffer;             // 获取裁判系统当前功率缓冲能量
 
     Chassis.Power_Control_Pid.err = Chassis.Power_Buffer_Tar - Chassis.Power_Buffer;
@@ -363,6 +343,7 @@ void Chassis_Task(void)
         Chassis.Gimbal_Yaw_Pid_Angle.output = pid_error_input(&Chassis.Gimbal_Yaw_Pid_Angle, Chassis.Gimbal_Yaw_Pid_Angle.err);
         switch (Chassis.Mode_Flag)
         {
+           
         case 1:
             if (Chassis.Mode == CHASSIS_PEG_TOP)
             {
@@ -370,7 +351,7 @@ void Chassis_Task(void)
             }
             else
             {
-                OMEGA_VALUE = Chassis.Gimbal_Yaw_Pid_Angle.output;
+                OMEGA_VALUE = Chassis.Gimbal_Yaw_Pid_Angle.output;//底盘跟随
             }
 
             break;
@@ -408,6 +389,13 @@ void Chassis_Task(void)
         default:
             break;
         }
+        
+        if(Chassis.Mode == CHASSIS_RESET)
+        {
+           Gimbal_Yaw_Angle_Offset=YAW_MOTOR_ANGLE;
+        }
+        
+        
         Chassis.X_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.X_Speed_Ramp, X_VALUE, 0.006f);
         Chassis.Y_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.Y_Speed_Ramp, Y_VALUE, 0.006f);
         Chassis.OMEGA_Speed_Ramp.output_speed = Apply_Speed_Ramp(&Chassis.OMEGA_Speed_Ramp, OMEGA_VALUE, 0.006f);

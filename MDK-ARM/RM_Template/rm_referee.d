@@ -1,7 +1,7 @@
 rm_template\rm_referee.o: ..\modules\referee\rm_referee.c
-rm_template\rm_referee.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\string.h
+rm_template\rm_referee.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\string.h
 rm_template\rm_referee.o: ..\modules\referee\crc_ref.h
-rm_template\rm_referee.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+rm_template\rm_referee.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdint.h
 rm_template\rm_referee.o: ../bsp/bsp_usart.h
 rm_template\rm_referee.o: ../Core/Inc/usart.h
 rm_template\rm_referee.o: ../Core/Inc/main.h
@@ -19,7 +19,7 @@ rm_template\rm_referee.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 rm_template\rm_referee.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-rm_template\rm_referee.o: D:\Program Files\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+rm_template\rm_referee.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stddef.h
 rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
@@ -39,3 +39,4 @@ rm_template\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart
 rm_template\rm_referee.o: ..\modules\referee\rm_referee.h
 rm_template\rm_referee.o: ..\modules\referee\referee_protocol.h
 rm_template\rm_referee.o: ../bsp/RM_typedef.h
+rm_template\rm_referee.o: ../application/robot_config.h

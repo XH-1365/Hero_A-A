@@ -46,10 +46,20 @@ char Super_Cap_Get_Data(Super_Cap_Struct *Super_Cap_x, CAN_RxHeaderTypeDef *RxHe
 
         memcpy(Super_Cap_x->Ret_Data.Buffer, CAN_RX_Buffer, sizeof(Super_Cap_Ret_Data_Union));
 
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_RESET);
         return SUCCESS;
     }
 
     return ERROR;
+}
+
+void Super_Cap_Timing_Handle()
+{
+    if(--Super_Cap.Time_out==0)
+    {
+        Super_Cap.Time_out=800;
+        HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_SET);
+    }
 }
 
 void Super_Cap_init(void)
@@ -58,8 +68,9 @@ void Super_Cap_init(void)
     Super_Cap.RX_STD_ID = SUPER_CAP_RX_STD_ID;
     Super_Cap.TX_STD_ID = SUPER_CAP_TX_STD_ID;
     Super_Cap_RX_Filter_Set();
-
+    Super_Cap.Time_out=50;
 }
+
 
 //设置超电功率单位 0.01w
 
