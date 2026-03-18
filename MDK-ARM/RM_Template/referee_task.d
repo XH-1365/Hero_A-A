@@ -44,3 +44,7 @@ rm_template\referee_task.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\stdarg.h
 rm_template\referee_task.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\string.h
 rm_template\referee_task.o: ../modules/super_cap.h
 rm_template\referee_task.o: ../application/robot_cmd.h
+rm_template\referee_task.o: ../application/chassis.h
+rm_template\referee_task.o: ../modules/pid.h
+rm_template\referee_task.o: ../modules/filter.h
+rm_template\referee_task.o: ../modules/Speed_Ramp.h

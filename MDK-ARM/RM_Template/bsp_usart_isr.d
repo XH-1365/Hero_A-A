@@ -39,5 +39,5 @@ rm_template\bsp_usart_isr.o: ../bsp/RM_typedef.h
 rm_template\bsp_usart_isr.o: ../application/robot_config.h
 rm_template\bsp_usart_isr.o: ../modules/vofa.h
 rm_template\bsp_usart_isr.o: ../modules/CH104_IMU_USART.H
-rm_template\bsp_usart_isr.o: ..\modules\referee\rm_referee.h
-rm_template\bsp_usart_isr.o: ..\modules\referee\referee_protocol.h
+rm_template\bsp_usart_isr.o: ../modules/referee/rm_referee.h
+rm_template\bsp_usart_isr.o: ../modules/referee/referee_protocol.h

@@ -48,11 +48,11 @@ rm_template\app.o: ../modules/CH104_IMU_CAN_CMD.h
 rm_template\app.o: ../modules/CH104_IMU_USART.H
 rm_template\app.o: ../modules/can_comm.h
 rm_template\app.o: ../modules/super_cap.h
-rm_template\app.o: ..\modules\referee\referee_task.h
-rm_template\app.o: ..\modules\referee\rm_referee.h
+rm_template\app.o: ../modules/referee/referee_task.h
+rm_template\app.o: ../modules/referee/rm_referee.h
 rm_template\app.o: ../Core/Inc/usart.h
 rm_template\app.o: ../Core/Inc/main.h
-rm_template\app.o: ..\modules\referee\referee_protocol.h
+rm_template\app.o: ../modules/referee/referee_protocol.h
 rm_template\app.o: ../bsp/bsp_usart.h
 rm_template\app.o: ../bsp/bsp_tim.h
 rm_template\app.o: ../Core/Inc/tim.h

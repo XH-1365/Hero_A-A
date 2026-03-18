@@ -220,7 +220,7 @@ void Chassis_Power_Control(void)
 
 //    Chassis.Referee_Power_Mx_Limit = Chassis_Get_Referee_Power_Mx_Limit(Chassis.Level); // 获取裁判系统底盘功率最大上限值
     Chassis.Referee_Power_Mx_Limit =100;
-    Chassis.Power_Buffer = referee_info.PowerHeatData.chassis_power_buffer;             // 获取裁判系统当前功率缓冲能量
+    Chassis.Power_Buffer = referee_info.PowerHeatData.buffer_energy;             // 获取裁判系统当前功率缓冲能量
 
     Chassis.Power_Control_Pid.err = Chassis.Power_Buffer_Tar - Chassis.Power_Buffer;
     Chassis.Power_Control_Pid.output = pid_error_input(&Chassis.Power_Control_Pid, Chassis.Power_Control_Pid.err);
@@ -364,7 +364,7 @@ void Chassis_Task(void)
             }
             else
             {
-                OMEGA_VALUE = PIX2 * 20.0f;
+                OMEGA_VALUE = PIX2 * 30.0f;
             }
 
             break;

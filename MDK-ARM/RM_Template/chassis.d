@@ -46,7 +46,7 @@ rm_template\chassis.o: ../modules/DJI_DR16.h
 rm_template\chassis.o: ../modules/vofa.h
 rm_template\chassis.o: ../modules/power.h
 rm_template\chassis.o: D:\work\keli5\1\ARM\ARMCC\Bin\..\include\math.h
-rm_template\chassis.o: ..\modules\referee\rm_referee.h
-rm_template\chassis.o: ..\modules\referee\referee_protocol.h
+rm_template\chassis.o: ../modules/referee/rm_referee.h
+rm_template\chassis.o: ../modules/referee/referee_protocol.h
 rm_template\chassis.o: ../bsp/bsp_usart.h
 rm_template\chassis.o: ../modules/super_cap.h

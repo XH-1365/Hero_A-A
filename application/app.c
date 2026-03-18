@@ -52,8 +52,11 @@ float DM_Angle_Test = 0;
 void App_Init(void)
 {
 
+    
+    HAL_Delay(3000);
 	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_8, GPIO_PIN_RESET);
-
+    HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7 | GPIO_PIN_6 | GPIO_PIN_5 | GPIO_PIN_4 | GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
 	//	CH104_IMU_USART_Init();
 
 	Bsp_CAN_Init();

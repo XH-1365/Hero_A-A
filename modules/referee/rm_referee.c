@@ -147,11 +147,7 @@ void Referee_RX_Handle(uint8_t *Buffer, uint8_t size) // 应放入接收中断
  */
 void RefereeSend(uint8_t *send, uint16_t tx_len)
 {
-//    // 等待上一次 DMA 传输完成
-//    while (__HAL_DMA_GET_FLAG(huart3.hdmatx, DMA_FLAG_TCIF1_5) == RESET);
 
-//    // 清除传输完成标志
-//    __HAL_DMA_CLEAR_FLAG(huart3.hdmatx, DMA_FLAG_TCIF1_5);
 
     // 进行新一轮发送
     HAL_UART_Transmit_DMA(&huart3, send, tx_len);

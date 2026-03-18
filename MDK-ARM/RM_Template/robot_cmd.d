@@ -42,8 +42,8 @@ rm_template\robot_cmd.o: ../modules/Speed_Ramp.h
 rm_template\robot_cmd.o: ..\application\gimbal.h
 rm_template\robot_cmd.o: ..\application\shoot.h
 rm_template\robot_cmd.o: ../modules/can_comm.h
-rm_template\robot_cmd.o: ..\modules\referee\rm_referee.h
+rm_template\robot_cmd.o: ../modules/referee/rm_referee.h
 rm_template\robot_cmd.o: ../Core/Inc/usart.h
 rm_template\robot_cmd.o: ../Core/Inc/main.h
-rm_template\robot_cmd.o: ..\modules\referee\referee_protocol.h
+rm_template\robot_cmd.o: ../modules/referee/referee_protocol.h
 rm_template\robot_cmd.o: ../bsp/bsp_usart.h

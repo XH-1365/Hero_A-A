@@ -46,9 +46,9 @@ rm_template\bsp_tim_isr.o: ../modules/DJI_DR16.h
 rm_template\bsp_tim_isr.o: ../application/robot_cmd.h
 rm_template\bsp_tim_isr.o: ../modules/CH104_IMU_USART.H
 rm_template\bsp_tim_isr.o: ../modules/can_comm.h
-rm_template\bsp_tim_isr.o: ..\modules\referee\referee_task.h
-rm_template\bsp_tim_isr.o: ..\modules\referee\rm_referee.h
+rm_template\bsp_tim_isr.o: ../modules/referee/referee_task.h
+rm_template\bsp_tim_isr.o: ../modules/referee/rm_referee.h
 rm_template\bsp_tim_isr.o: ../Core/Inc/usart.h
-rm_template\bsp_tim_isr.o: ..\modules\referee\referee_protocol.h
+rm_template\bsp_tim_isr.o: ../modules/referee/referee_protocol.h
 rm_template\bsp_tim_isr.o: ../bsp/bsp_usart.h
 rm_template\bsp_tim_isr.o: ../modules/super_cap.h

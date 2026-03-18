@@ -94,7 +94,7 @@ typedef enum
 	LEN_event_data = 4,							 // 0x0101
 	LEN_supply_projectile_action = 4,			 // 0x0102
 	LEN_game_robot_state = 13,					 // 0x0201
-	LEN_power_heat_data = 16,					 // 0x0202
+	LEN_power_heat_data = 14 ,					 // 0x0202
 	LEN_game_robot_pos = 16,					 // 0x0203
 	LEN_buff_musk = 1,							 // 0x0204
 	LEN_aerial_robot_energy = 1,				 // 0x0205
@@ -173,15 +173,14 @@ typedef struct
 	uint8_t None : 5;							 // 保留无功能
 } ext_game_robot_state_t;
 
-/* ID: 0X0202  Byte: 16    实时功率热量数据 */
+/* ID: 0X0202  Byte: 14     实时功率热量数据 */
 typedef struct
 {
-	uint16_t chassis_volt;		   // 电源管理模块的chassis口输出电压（单位：mV）
-	uint16_t chassis_current;	   // 电源管理模块的chassis口输出电流（单位：mA）
-	float chassis_power;		   // 瞬时功率  底盘功率（单位：W）
-	uint16_t chassis_power_buffer; // 60焦耳缓冲能量 （单位：J）
-	uint16_t shooter_heat0_17mm;   // 17mm发射机构枪口热量
-	uint16_t shooter_heat1_17mm;   // 17mm发射机构枪口热量
+	uint16_t reserved1; 
+	uint16_t reserved2; 
+	float    reserved13;		  
+	uint16_t buffer_energy;         // 60焦耳缓冲能量 （单位：J）
+	uint16_t shooter_heat_17mm;   // 17mm发射机构枪口热量
 	uint16_t shooter_heat_42mm;	   // 42mm发射机构枪口热量
 } ext_power_heat_data_t;
 
